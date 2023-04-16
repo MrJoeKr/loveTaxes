@@ -3,9 +3,10 @@ globals
   max-grain    ; maximum amount any patch can hold
   life-expectancy-min
   life-expectancy-max
-
+  metabolism-max
   gini-index-reserve
   lorenz-points
+  state-treasure
 ]
 
 patches-own
@@ -21,6 +22,10 @@ turtles-own
   life-expectancy  ; maximum age that a turtle can reach
   metabolism       ; how much grain a turtle eats each time
   vision           ; how many patches ahead a turtle can see
+  class            ; what social class is in, based on wealth
+                   ; 0.75 - lower (0-25%)
+                   ; 1 - middle (25-75%)
+                   ; 1.25 - high (75-100%)
 ]
 
 ;;;
@@ -33,6 +38,8 @@ to setup
   set max-grain 50
   set life-expectancy-min 1
   set life-expectancy-max 83
+  set metabolism-max 15
+  set state-treasure 0
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
@@ -91,11 +98,10 @@ end
 ;; the wealth of the richest turtle, color it red.  If between one
 ;; and two thirds, color it green.  If over two thirds, color it blue.
 to recolor-turtles
-  let max-wealth max [wealth] of turtles
   ask turtles
-    [ ifelse (wealth <= max-wealth / 3)
+    [ ifelse (class = 0.75) ; low
         [ set color red ]
-        [ ifelse (wealth <= (max-wealth * 2 / 3))
+        [ ifelse (class = 1) ; middle
             [ set color green ]
             [ set color blue ] ] ]
 end
@@ -107,6 +113,7 @@ end
 to go
   ask turtles
     [ turn-towards-grain ]  ;; choose direction holding most grain within the turtle's vision
+  compute-class ;; determine social class of turtle
   harvest
   ask turtles
     [ move-eat-age-die ]
@@ -151,7 +158,9 @@ end
 to harvest
   ; have turtles harvest before any turtle sets the patch to 0
   ask turtles
-    [ set wealth floor (wealth + (grain-here / (count turtles-here))) ]
+    [
+      harvest-wealth
+    ]
   ;; now that the grain has been harvested, have the turtles make the
   ;; patches which they are on have no grain
   ask turtles
@@ -159,10 +168,35 @@ to harvest
       recolor-patch ]
 end
 
+to harvest-wealth
+  let harvested-amount ((grain-here * class) / (count turtles-here))
+  let taxed-amount ((tax * harvested-amount) / 100)
+
+  set state-treasure (state-treasure + taxed-amount)
+  set wealth (wealth - harvested-amount)
+end
+
+; compute class for the turtle
+to compute-class
+  let max-wealth max [wealth] of turtles
+  ask turtles
+    [ ifelse (wealth <= max-wealth / 3)
+        [ set class 0.75 ]
+        [ ifelse (wealth <= (max-wealth * 2 / 3))
+            [ set class 1 ]
+            [ set class 1.25 ] ] ]
+end
+
+to be-kind
+  let charity-amount ((wealth * charity) / 100)
+end
+
 to move-eat-age-die  ;; turtle procedure
   fd 1
+
   ;; consume some grain according to metabolism
   set wealth (wealth - metabolism)
+
   ;; grow older
   set age (age + 1)
   ;; check for death conditions: if you have no grain or
@@ -279,21 +313,6 @@ HORIZONTAL
 
 SLIDER
 8
-106
-176
-139
-metabolism-max
-metabolism-max
-1
-25
-15.0
-1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-8
 38
 176
 71
@@ -309,9 +328,9 @@ HORIZONTAL
 
 SLIDER
 8
-208
+108
 176
-241
+141
 percent-best-land
 percent-best-land
 5
@@ -396,6 +415,54 @@ false
 "" ""
 PENS
 "default" 1.0 0 -13345367 true "" "plot (gini-index-reserve / num-people) / 0.5"
+
+SLIDER
+7
+144
+179
+177
+tax
+tax
+0
+100
+25.0
+1
+1
+%
+HORIZONTAL
+
+SLIDER
+6
+179
+178
+212
+charity
+charity
+0
+100
+5.0
+1
+1
+%
+HORIZONTAL
+
+PLOT
+921
+451
+1171
+637
+Relative state treasure
+Time
+Relative wealth
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -5298144 true "" "plot (state-treasure / num-people)"
 
 @#$#@#$#@
 ## WHAT IS IT?
