@@ -3,7 +3,7 @@ globals
   max-grain    ; maximum amount any patch can hold
   life-expectancy-min
   life-expectancy-max
-  metabolism-max
+
   gini-index-reserve
   lorenz-points
 ]
@@ -33,7 +33,6 @@ to setup
   set max-grain 50
   set life-expectancy-min 1
   set life-expectancy-max 83
-  set metabolism-max 15
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
@@ -273,6 +272,21 @@ max-vision
 1
 15
 5.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+8
+106
+176
+139
+metabolism-max
+metabolism-max
+1
+25
+15.0
 1
 1
 NIL
