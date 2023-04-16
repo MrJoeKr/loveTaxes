@@ -4,6 +4,8 @@ globals
   life-expectancy-min
   life-expectancy-max
   metabolism-max
+  num-grain-grown
+  grain-growth-interval
   gini-index-reserve
   lorenz-points
   state-treasure
@@ -39,6 +41,8 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set metabolism-max 15
+  set num-grain-grown
+  set grain-growth-interval
   set state-treasure 0
   ;; call other procedures to set up various parts of the world
   setup-patches
@@ -119,6 +123,10 @@ to go
     [ move-eat-age-die ]
   recolor-turtles
 
+  ;; grow grain every grain-growth-interval clock ticks
+  if ticks mod grain-growth-interval = 0
+    [ ask patches [ grow-grain ] ]
+
   update-lorenz-and-gini
   tick
 end
@@ -151,6 +159,18 @@ to-report grain-ahead  ;; turtle procedure
     [ set total total + [grain-here] of patch-ahead how-far
       set how-far how-far + 1 ]
   report total
+end
+
+to grow-grain  ;; patch procedure
+  ;; if a patch does not have it's maximum amount of grain, add
+  ;; num-grain-grown to its grain amount
+  if (grain-here < max-grain-here)
+    [ set grain-here grain-here + num-grain-grown
+      ;; if the new amount of grain on a patch is over its maximum
+      ;; capacity, set it to its maximum
+      if (grain-here > max-grain-here)
+        [ set grain-here max-grain-here ]
+      recolor-patch ]
 end
 
 ;; each turtle harvests the grain on its patch.  if there are multiple
@@ -189,6 +209,9 @@ end
 
 to be-kind
   let charity-amount ((wealth * charity) / 100)
+
+  set wealth (wealth - charity-amount)
+  set grain-here (grain-here + charity-amount)
 end
 
 to move-eat-age-die  ;; turtle procedure
@@ -196,6 +219,8 @@ to move-eat-age-die  ;; turtle procedure
 
   ;; consume some grain according to metabolism
   set wealth (wealth - metabolism)
+
+  be-kind
 
   ;; grow older
   set age (age + 1)
@@ -440,7 +465,7 @@ charity
 charity
 0
 100
-5.0
+30.0
 1
 1
 %
