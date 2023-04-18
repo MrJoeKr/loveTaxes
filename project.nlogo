@@ -126,9 +126,18 @@ to go
   ask turtles
     [ turn-towards-grain ]  ;; choose direction holding most grain within the turtle's vision
   compute-class ;; determine social class of turtle
-  harvest
+
+  ;TODO
   ask turtles
-    [ move-eat-age-die ]
+  [
+    harvest
+  ]
+
+  ask turtles
+  [ turn-towards-grain ]
+
+  ask turtles
+  [ move-eat-age-die ]
 
   recolor-turtles
 
@@ -194,16 +203,18 @@ end
 ;; each turtle harvests the grain on its patch.  if there are multiple
 ;; turtles on a patch, divide the grain evenly among the turtles
 to harvest
+  harvest-wealth
+  recolor-patch
   ; have turtles harvest before any turtle sets the patch to 0
-  ask turtles
-    [
-      harvest-wealth
-    ]
+  ;ask turtles
+  ;  [
+  ;    harvest-wealth
+  ;  ]
   ;; now that the grain has been harvested, have the turtles make the
   ;; patches which they are on have no grain
-  ask turtles
-    [ ;set grain-here 0
-      recolor-patch ]
+  ;ask turtles
+  ; [ set grain-here 0
+  ;    recolor-patch ]
 end
 
 to harvest-wealth
@@ -359,10 +370,10 @@ ticks
 30.0
 
 BUTTON
-8
-279
-84
-312
+13
+350
+89
+383
 setup
 setup
 NIL
@@ -376,10 +387,10 @@ NIL
 1
 
 BUTTON
-99
-277
-169
-310
+100
+350
+170
+383
 go
 go
 T
@@ -484,7 +495,7 @@ tax
 tax
 0
 100
-9.0
+10.0
 1
 1
 %
@@ -499,7 +510,7 @@ charity
 charity
 0
 100
-0.0
+20.0
 1
 1
 %
@@ -568,7 +579,22 @@ eat-price
 eat-price
 0
 1
-0.1
+0.8
+0.01
+1
+NIL
+HORIZONTAL
+
+SLIDER
+7
+260
+180
+294
+grain-bonus
+grain-bonus
+0
+1
+0.02
 0.01
 1
 NIL
