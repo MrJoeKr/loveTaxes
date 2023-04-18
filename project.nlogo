@@ -12,6 +12,7 @@ globals
   poverty-fine   ; how much state pays for one under the poverty-limit
   eat-price      ; price for eating
   grain-bonus    ; bonus for harvesting grain
+  dead-people    ; number of agents who died
 ]
 
 patches-own
@@ -46,10 +47,12 @@ to setup
   set metabolism-max 15
   set num-grain-grown 0 ;was 4
   set grain-growth-interval 1
+  ; our vars
   set state-treasure 0
   set poverty-fine 1
   set eat-price 1
-  set grain-bonus 0.1
+  set grain-bonus 0.05
+  set dead-people 0
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
@@ -292,7 +295,8 @@ to move-eat-age-die  ;; turtle procedure
   ;; holds, then you "die" and are "reborn" (in fact, your variables
   ;; are just reset to new random values)
   if (age >= life-expectancy) or (wealth < 0)
-    [ set-initial-turtle-vars ]
+    [ set-initial-turtle-vars
+      set dead-people (dead-people + 1) ]
 end
 
 ;; this procedure recomputes the value of gini-index-reserve
@@ -408,7 +412,7 @@ num-people
 num-people
 2
 1000
-2.0
+203.0
 1
 1
 NIL
@@ -547,6 +551,24 @@ false
 "" ""
 PENS
 "default" 1.0 0 -14454117 true "" "plot (mean [wealth] of turtles)"
+
+PLOT
+537
+457
+781
+642
+Died in total
+Time
+Total Dead
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -5298144 true "" "plot dead-people"
 
 @#$#@#$#@
 ## WHAT IS IT?
