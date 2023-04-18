@@ -42,7 +42,7 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set metabolism-max 15
-  set num-grain-grown 0.1 ;was 4
+  set num-grain-grown 0 ;was 4
   set grain-growth-interval 1
   set state-treasure 0
   set poverty-fine 1
@@ -96,7 +96,7 @@ to set-initial-turtle-vars
                         random (life-expectancy-max - life-expectancy-min + 1)
   set metabolism 1 + random metabolism-max
   set wealth metabolism + random 50
-  set vision 1 ;+ random max-vision
+  set vision 5 ;+ random max-vision
   set age random life-expectancy
 end
 
@@ -168,6 +168,8 @@ to grow-grain  ;; patch procedure
 
   ;; if grain exceeds max, make it max value
   set grain-here min (list grain-here max-grain-here)
+  ;; cannot be less than zero
+  set grain-here max (list grain-here 0)
 
   ;; if a patch does not have it's maximum amount of grain, add
   ;; num-grain-grown to its grain amount
@@ -262,7 +264,7 @@ to move-eat-age-die  ;; turtle procedure
   ;; you're older than the life expectancy or if some random factor
   ;; holds, then you "die" and are "reborn" (in fact, your variables
   ;; are just reset to new random values)
-  if (wealth < 0) or (age >= life-expectancy)
+  if (age >= life-expectancy) ;or (wealth < 0)
     [ set-initial-turtle-vars ]
 end
 
@@ -394,7 +396,7 @@ percent-best-land
 percent-best-land
 5
 25
-14.0
+25.0
 1
 1
 %
@@ -484,7 +486,7 @@ tax
 tax
 0
 100
-20.0
+0.0
 1
 1
 %
@@ -499,7 +501,7 @@ charity
 charity
 0
 100
-34.0
+41.0
 1
 1
 %
