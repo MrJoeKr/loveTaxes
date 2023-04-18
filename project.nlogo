@@ -10,6 +10,7 @@ globals
   lorenz-points
   state-treasure ; total amount of state money
   poverty-fine   ; how much state pays for one under the poverty-limit
+  eat-price      ; price for eating
 ]
 
 patches-own
@@ -46,6 +47,7 @@ to setup
   set grain-growth-interval 1
   set state-treasure 0
   set poverty-fine 1
+  set eat-price 1
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
@@ -235,10 +237,8 @@ to be-kind
 
   set wealth (wealth - charity-amount)
 
-  if wealth < 0
-  [
-    stop
-  ]
+  if wealth <= 0
+    [ stop ]
 
   ;; set patches around the agent
   let neighbor-patches patch-set patches in-radius 1 with [distance myself > 0]
@@ -265,10 +265,13 @@ to move-eat-age-die  ;; turtle procedure
   ;; consume some grain according to metabolism
   set wealth (wealth - metabolism)
 
+  ;; eat
+  set wealth (wealth - eat-price)
+
   ;; take money from state if under poverty limit
-  if wealth < poverty-limit [
-      set state-treasure (state-treasure - poverty-fine)
-  ]
+  ;if wealth < poverty-limit [
+  ;    set state-treasure (state-treasure - poverty-fine)
+  ;]
 
   ;; set grain around
   be-kind
@@ -279,7 +282,9 @@ to move-eat-age-die  ;; turtle procedure
   ;; you're older than the life expectancy or if some random factor
   ;; holds, then you "die" and are "reborn" (in fact, your variables
   ;; are just reset to new random values)
-  if (age >= life-expectancy) ;or (wealth < 0)
+  if (wealth < 0)
+    [ set state-treasure (state-treasure - poverty-fine) ]
+  if (age >= life-expectancy) or (wealth < 0)
     [ set-initial-turtle-vars ]
 end
 
@@ -962,7 +967,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.2
+NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
