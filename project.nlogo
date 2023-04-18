@@ -26,9 +26,9 @@ turtles-own
   metabolism       ; how much grain a turtle eats each time
   vision           ; how many patches ahead a turtle can see
   class            ; what social class is in, based on wealth
-                   ; 0.75 - lower (0-25%)
-                   ; 1 - middle (25-75%)
-                   ; 1.25 - high (75-100%)
+                   ; 0.5 - lower (0-25%)
+                   ; 0.75 - middle (25-75%)
+                   ; 1 - high (75-100%)
 ]
 
 ;;;
@@ -105,9 +105,9 @@ end
 ;; and two thirds, color it green.  If over two thirds, color it blue.
 to recolor-turtles
   ask turtles
-    [ ifelse (class = 0.75) ; low
+    [ ifelse (class = 0.5) ; low
         [ set color red ]
-        [ ifelse (class = 1) ; middle
+        [ ifelse (class = 0.75) ; middle
             [ set color green ]
             [ set color blue ] ] ]
 end
@@ -123,6 +123,7 @@ to go
   harvest
   ask turtles
     [ move-eat-age-die ]
+
   recolor-turtles
 
   ;; grow grain every grain-growth-interval clock ticks
@@ -220,10 +221,10 @@ to compute-class
   let max-wealth max [wealth] of turtles
   ask turtles
     [ ifelse (wealth <= max-wealth / 3)
-        [ set class 0.75 ]
+        [ set class 0.5 ]
         [ ifelse (wealth <= (max-wealth * 2 / 3))
-            [ set class 1 ]
-            [ set class 1.25 ] ] ]
+            [ set class 0.75 ]
+            [ set class 1 ] ] ]
 end
 
 ; put grain according to the charity
@@ -498,7 +499,7 @@ charity
 charity
 0
 100
-44.0
+34.0
 1
 1
 %
