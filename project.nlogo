@@ -42,7 +42,7 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set metabolism-max 15
-  set num-grain-grown 0 ;0.1 ;was 4
+  set num-grain-grown 0.1 ;was 4
   set grain-growth-interval 1
   set state-treasure 0
   set poverty-fine 1
@@ -96,7 +96,7 @@ to set-initial-turtle-vars
                         random (life-expectancy-max - life-expectancy-min + 1)
   set metabolism 1 + random metabolism-max
   set wealth metabolism + random 50
-  set vision 1
+  set vision 1 ;+ random max-vision
   set age random life-expectancy
 end
 
@@ -198,7 +198,8 @@ to harvest
 end
 
 to harvest-wealth
-  let harvested-amount ((grain-here * class) / (count turtles-here))
+  let harvested-amount (grain-here * class)
+  ;let harvested-amount ((grain-here * class) / (count turtles-here))
   ; tax the harvest
   let taxed-amount ((tax * harvested-amount) / 100)
 
@@ -392,7 +393,7 @@ percent-best-land
 percent-best-land
 5
 25
-10.0
+14.0
 1
 1
 %
