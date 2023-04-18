@@ -96,7 +96,7 @@ to set-initial-turtle-vars
                         random (life-expectancy-max - life-expectancy-min + 1)
   set metabolism 1 + random metabolism-max
   set wealth metabolism + random 50
-  set vision 1 + random max-vision
+  set vision 1
   set age random life-expectancy
 end
 
@@ -530,7 +530,7 @@ poverty-limit
 poverty-limit
 0
 100
-10.0
+0.0
 1
 1
 NIL
