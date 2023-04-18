@@ -10,7 +10,7 @@ globals
   lorenz-points
   state-treasure ; total amount of state money
   poverty-fine   ; how much state pays for one under the poverty-limit
-  eat-price      ; price for eating
+  ; eat-price    ; price for eating is slider
   grain-bonus    ; bonus for harvesting grain
   dead-people    ; number of agents who died
 ]
@@ -50,9 +50,9 @@ to setup
   ; our vars
   set state-treasure 0
   set poverty-fine 1
-  set eat-price 1
   set grain-bonus 0.05
   set dead-people 0
+  ;;;;;;
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
@@ -554,6 +554,21 @@ false
 "" ""
 PENS
 "default" 1.0 0 -5298144 true "" "plot dead-people"
+
+SLIDER
+6
+220
+179
+254
+eat-price
+eat-price
+0
+1
+1.0
+0.01
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
