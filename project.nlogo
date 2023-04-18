@@ -193,7 +193,7 @@ to harvest
   ;; now that the grain has been harvested, have the turtles make the
   ;; patches which they are on have no grain
   ask turtles
-    [ set grain-here 0
+    [ ;set grain-here 0
       recolor-patch ]
 end
 
@@ -202,11 +202,16 @@ to harvest-wealth
   ; tax the harvest
   let taxed-amount ((tax * harvested-amount) / 100)
 
+  ; decrease grain-here according to the harvested amount
+  set grain-here (grain-here - harvested-amount)
+
   set state-treasure (state-treasure + taxed-amount)
 
   ; add to wealth according to the amount of harvested
+  ; This was before, not sure why we decrease here
   ; set wealth (wealth - harvested-amount)
-  set wealth (wealth + harvested-amount)
+  let income (harvested-amount - taxed-amount)
+  set wealth (wealth + income)
 end
 
 ; compute class for the turtle
@@ -477,7 +482,7 @@ tax
 tax
 0
 100
-25.0
+66.0
 1
 1
 %
@@ -492,7 +497,7 @@ charity
 charity
 0
 100
-57.0
+84.0
 1
 1
 %
