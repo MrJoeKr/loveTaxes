@@ -42,7 +42,7 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set metabolism-max 15
-  set num-grain-grown 4
+  set num-grain-grown 1 ;was 4
   set grain-growth-interval 1
   set state-treasure 0
   set poverty-fine 1
@@ -167,18 +167,19 @@ to grow-grain  ;; patch procedure
 
   ;; if grain exceeds max, make it max value
   set grain-here min (list grain-here max-grain-here)
-  recolor-patch
 
   ;; if a patch does not have it's maximum amount of grain, add
   ;; num-grain-grown to its grain amount
-  ;if (grain-here <= max-grain-here)
-  ;  [ set grain-here grain-here + num-grain-grown
-  ;
-  ;    ;; if the new amount of grain on a patch is over its maximum
-  ;    ;; capacity, set it to its maximum
-  ;    if (grain-here > max-grain-here)
-  ;      [ set grain-here max-grain-here ]
-  ;    recolor-patch ]
+  if (grain-here <= max-grain-here)
+    [ set grain-here grain-here + num-grain-grown
+
+      ;; if the new amount of grain on a patch is over its maximum
+      ;; capacity, set it to its maximum
+      if (grain-here > max-grain-here)
+        [ set grain-here max-grain-here ]
+       ]
+
+  recolor-patch
 end
 
 ;; each turtle harvests the grain on its patch.  if there are multiple
@@ -491,7 +492,7 @@ charity
 charity
 0
 100
-29.0
+57.0
 1
 1
 %
