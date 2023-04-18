@@ -192,10 +192,14 @@ end
 
 to harvest-wealth
   let harvested-amount ((grain-here * class) / (count turtles-here))
+  ; tax the harvest
   let taxed-amount ((tax * harvested-amount) / 100)
 
   set state-treasure (state-treasure + taxed-amount)
+
+  ; add to wealth according to the amount of harvested
   set wealth (wealth - harvested-amount)
+  ; set wealth (wealth + harvested-amount)
 end
 
 ; compute class for the turtle
@@ -209,10 +213,12 @@ to compute-class
             [ set class 1.25 ] ] ]
 end
 
+; put grain according to the charity
 to be-kind
   let charity-amount ((wealth * charity) / 100)
 
   set wealth (wealth - charity-amount)
+
   set grain-here (grain-here + charity-amount)
 end
 
@@ -227,7 +233,6 @@ to move-eat-age-die  ;; turtle procedure
       set state-treasure (state-treasure - poverty-fine)
   ]
 
-  ;; set grain around
   be-kind
 
   ;; grow older
@@ -395,10 +400,10 @@ PENS
 "up" 1.0 0 -13345367 true "" "plot count turtles with [color = blue]"
 
 PLOT
-257
-454
-469
-634
+612
+44
+824
+224
 Class Histogram
 Classes
 Turtles
