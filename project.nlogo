@@ -164,15 +164,21 @@ to-report grain-ahead  ;; turtle procedure
 end
 
 to grow-grain  ;; patch procedure
+
+  ;; if grain exceeds max, make it max value
+  set grain-here min (list grain-here max-grain-here)
+  recolor-patch
+
   ;; if a patch does not have it's maximum amount of grain, add
   ;; num-grain-grown to its grain amount
-  if (grain-here < max-grain-here)
-    [ set grain-here grain-here + num-grain-grown
-      ;; if the new amount of grain on a patch is over its maximum
-      ;; capacity, set it to its maximum
-      if (grain-here > max-grain-here)
-        [ set grain-here max-grain-here ]
-      recolor-patch ]
+  ;if (grain-here <= max-grain-here)
+  ;  [ set grain-here grain-here + num-grain-grown
+  ;
+  ;    ;; if the new amount of grain on a patch is over its maximum
+  ;    ;; capacity, set it to its maximum
+  ;    if (grain-here > max-grain-here)
+  ;      [ set grain-here max-grain-here ]
+  ;    recolor-patch ]
 end
 
 ;; each turtle harvests the grain on its patch.  if there are multiple
@@ -198,8 +204,8 @@ to harvest-wealth
   set state-treasure (state-treasure + taxed-amount)
 
   ; add to wealth according to the amount of harvested
-  set wealth (wealth - harvested-amount)
-  ; set wealth (wealth + harvested-amount)
+  ; set wealth (wealth - harvested-amount)
+  set wealth (wealth + harvested-amount)
 end
 
 ; compute class for the turtle
@@ -219,7 +225,13 @@ to be-kind
 
   set wealth (wealth - charity-amount)
 
-  set grain-here (grain-here + charity-amount)
+  ;; Set patches around the agent
+  let neighbor-patches patch-set patches in-radius 1 with [distance myself > 0]
+
+  ask neighbor-patches [
+    set grain-here (grain-here + charity-amount / 8)
+  ]
+
 end
 
 to move-eat-age-die  ;; turtle procedure
@@ -233,6 +245,7 @@ to move-eat-age-die  ;; turtle procedure
       set state-treasure (state-treasure - poverty-fine)
   ]
 
+  ;; set grain around
   be-kind
 
   ;; grow older
@@ -478,7 +491,7 @@ charity
 charity
 0
 100
-30.0
+29.0
 1
 1
 %
