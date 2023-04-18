@@ -11,7 +11,7 @@ globals
   state-treasure ; total amount of state money
   poverty-fine   ; how much state pays for one under the poverty-limit
   ; eat-price    ; price for eating is slider
-  grain-bonus    ; bonus for harvesting grain
+  ; grain-bonus  ; bonus for harvesting grain
   dead-people    ; number of agents who died
 ]
 
@@ -50,7 +50,6 @@ to setup
   ; our vars
   set state-treasure 0
   set poverty-fine 1
-  set grain-bonus 0.05
   set dead-people 0
   ;;;;;;
   ;; call other procedures to set up various parts of the world
@@ -271,7 +270,9 @@ to move-eat-age-die  ;; turtle procedure
   fd 1
 
   ;; consume some grain according to metabolism
-  set wealth (wealth - metabolism)
+
+  ; Was before
+  ; set wealth (wealth - metabolism)
 
   ;; eat
   set wealth (wealth - eat-price)
@@ -289,12 +290,15 @@ to move-eat-age-die  ;; turtle procedure
     [ set state-treasure (state-treasure - poverty-fine) ]
 
   ;; grow older
-  set age (age + 1)
+  ; set age (age + 1)
   ;; check for death conditions: if you have no grain or
   ;; you're older than the life expectancy or if some random factor
   ;; holds, then you "die" and are "reborn" (in fact, your variables
   ;; are just reset to new random values)
-  if (age >= life-expectancy) or (wealth < 0)
+
+  ; Do not die for being too old for now
+  ; if (age >= life-expectancy) or (wealth < 0)
+  if wealth < 0
     [ set-initial-turtle-vars
       set dead-people (dead-people + 1) ]
 end
@@ -480,7 +484,7 @@ tax
 tax
 0
 100
-0.0
+9.0
 1
 1
 %
@@ -495,7 +499,7 @@ charity
 charity
 0
 100
-58.0
+0.0
 1
 1
 %
@@ -564,7 +568,7 @@ eat-price
 eat-price
 0
 1
-1.0
+0.1
 0.01
 1
 NIL
