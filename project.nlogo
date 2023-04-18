@@ -235,6 +235,11 @@ to be-kind
 
   set wealth (wealth - charity-amount)
 
+  if wealth < 0
+  [
+    stop
+  ]
+
   ;; set patches around the agent
   let neighbor-patches patch-set patches in-radius 1 with [distance myself > 0]
 
@@ -511,7 +516,7 @@ charity
 charity
 0
 100
-60.0
+58.0
 1
 1
 %
