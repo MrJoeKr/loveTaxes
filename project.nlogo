@@ -8,7 +8,8 @@ globals
   grain-growth-interval
   gini-index-reserve
   lorenz-points
-  state-treasure
+  state-treasure ; total amount of state money
+  poverty-fine   ; how much state pays for one under the poverty-limit
 ]
 
 patches-own
@@ -44,6 +45,7 @@ to setup
   set num-grain-grown 4
   set grain-growth-interval 1
   set state-treasure 0
+  set poverty-fine 1
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
@@ -220,6 +222,12 @@ to move-eat-age-die  ;; turtle procedure
   ;; consume some grain according to metabolism
   set wealth (wealth - metabolism)
 
+  ;; take money from state if under poverty limit
+  if wealth < poverty-limit [
+      set state-treasure (state-treasure - poverty-fine)
+  ]
+
+  ;; set grain around
   be-kind
 
   ;; grow older
@@ -289,9 +297,9 @@ ticks
 
 BUTTON
 8
-256
+279
 84
-289
+312
 setup
 setup
 NIL
@@ -305,10 +313,10 @@ NIL
 1
 
 BUTTON
-105
-256
-175
-289
+99
+277
+169
+310
 go
 go
 T
@@ -472,10 +480,10 @@ charity
 HORIZONTAL
 
 PLOT
-921
-451
-1171
-637
+613
+232
+863
+418
 Relative state treasure
 Time
 Relative wealth
@@ -488,6 +496,21 @@ false
 "" ""
 PENS
 "default" 1.0 0 -5298144 true "" "plot (state-treasure / num-people)"
+
+SLIDER
+6
+219
+178
+252
+poverty-limit
+poverty-limit
+0
+100
+10.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -896,7 +919,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.3.0
+NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
