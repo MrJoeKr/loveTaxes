@@ -519,21 +519,6 @@ false
 PENS
 "default" 1.0 0 -5298144 true "" "plot (state-treasure / num-people)"
 
-SLIDER
-6
-219
-178
-252
-poverty-limit
-poverty-limit
-0
-100
-0.0
-1
-1
-NIL
-HORIZONTAL
-
 PLOT
 281
 452
