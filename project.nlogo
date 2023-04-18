@@ -49,7 +49,7 @@ to setup
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
-  update-lorenz-and-gini
+  ;update-lorenz-and-gini
   reset-ticks
 end
 
@@ -96,7 +96,7 @@ to set-initial-turtle-vars
                         random (life-expectancy-max - life-expectancy-min + 1)
   set metabolism 1 + random metabolism-max
   set wealth metabolism + random 50
-  set vision 5 ;+ random max-vision
+  set vision 1 ;+ random max-vision
   set age random life-expectancy
 end
 
@@ -130,7 +130,7 @@ to go
   if ticks mod grain-growth-interval = 0
     [ ask patches [ grow-grain ] ]
 
-  update-lorenz-and-gini
+  ;update-lorenz-and-gini
   tick
 end
 
@@ -235,12 +235,22 @@ to be-kind
 
   set wealth (wealth - charity-amount)
 
-  ;; Set patches around the agent
+  ;; set patches around the agent
   let neighbor-patches patch-set patches in-radius 1 with [distance myself > 0]
 
-  ask neighbor-patches [
-    set grain-here (grain-here + charity-amount / 8)
+  ;; do not put more grain than max-grain-here
+  ask neighbor-patches
+  [
+    let grain-amount (max-grain-here - grain-here)
+    if charity-amount - grain-amount >= 0
+    [
+      set grain-here (grain-here + grain-amount)
+      set charity-amount (charity-amount - grain-amount)
+    ]
   ]
+
+  ;; give back unused charity
+  set wealth (wealth + charity-amount)
 
 end
 
@@ -381,7 +391,7 @@ num-people
 num-people
 2
 1000
-250.0
+2.0
 1
 1
 NIL
@@ -501,7 +511,7 @@ charity
 charity
 0
 100
-41.0
+60.0
 1
 1
 %
