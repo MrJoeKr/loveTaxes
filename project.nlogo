@@ -42,7 +42,7 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set metabolism-max 15
-  set num-grain-grown 1 ;was 4
+  set num-grain-grown 0 ;0.1 ;was 4
   set grain-growth-interval 1
   set state-treasure 0
   set poverty-fine 1
@@ -177,7 +177,7 @@ to grow-grain  ;; patch procedure
       ;; capacity, set it to its maximum
       if (grain-here > max-grain-here)
         [ set grain-here max-grain-here ]
-       ]
+    ]
 
   recolor-patch
 end
@@ -482,7 +482,7 @@ tax
 tax
 0
 100
-66.0
+20.0
 1
 1
 %
@@ -497,7 +497,7 @@ charity
 charity
 0
 100
-84.0
+44.0
 1
 1
 %
