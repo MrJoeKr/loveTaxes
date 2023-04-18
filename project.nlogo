@@ -11,6 +11,7 @@ globals
   state-treasure ; total amount of state money
   poverty-fine   ; how much state pays for one under the poverty-limit
   eat-price      ; price for eating
+  grain-bonus    ; bonus for harvesting grain
 ]
 
 patches-own
@@ -48,6 +49,7 @@ to setup
   set state-treasure 0
   set poverty-fine 1
   set eat-price 1
+  set grain-bonus 0.1
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
@@ -204,6 +206,9 @@ end
 
 to harvest-wealth
   let harvested-amount (grain-here * class)
+  ; add bonus
+  set harvested-amount (harvested-amount + harvested-amount * grain-bonus)
+
   ;let harvested-amount ((grain-here * class) / (count turtles-here))
   ; tax the harvest
   let taxed-amount ((tax * harvested-amount) / 100)
@@ -276,14 +281,16 @@ to move-eat-age-die  ;; turtle procedure
   ;; set grain around
   be-kind
 
+  ; pay for agents who have fees
+  if (wealth < 0)
+    [ set state-treasure (state-treasure - poverty-fine) ]
+
   ;; grow older
   set age (age + 1)
   ;; check for death conditions: if you have no grain or
   ;; you're older than the life expectancy or if some random factor
   ;; holds, then you "die" and are "reborn" (in fact, your variables
   ;; are just reset to new random values)
-  if (wealth < 0)
-    [ set state-treasure (state-treasure - poverty-fine) ]
   if (age >= life-expectancy) or (wealth < 0)
     [ set-initial-turtle-vars ]
 end
@@ -460,43 +467,6 @@ false
 PENS
 "default" 1.0 1 -2674135 true "" "plot-pen-reset\nset-plot-pen-color red\nplot count turtles with [color = red]\nset-plot-pen-color green\nplot count turtles with [color = green]\nset-plot-pen-color blue\nplot count turtles with [color = blue]"
 
-PLOT
-471
-454
-672
-634
-Lorenz Curve
-Pop %
-Wealth %
-0.0
-100.0
-0.0
-100.0
-false
-true
-"" ""
-PENS
-"lorenz" 1.0 0 -2674135 true "" "plot-pen-reset\nset-plot-pen-interval 100 / num-people\nplot 0\nforeach lorenz-points plot"
-"equal" 100.0 0 -16777216 true "plot 0\nplot 100" ""
-
-PLOT
-674
-454
-908
-634
-Gini-Index v. Time
-Time
-Gini
-0.0
-50.0
-0.0
-1.0
-true
-false
-"" ""
-PENS
-"default" 1.0 0 -13345367 true "" "plot (gini-index-reserve / num-people) / 0.5"
-
 SLIDER
 7
 144
@@ -559,6 +529,24 @@ poverty-limit
 1
 NIL
 HORIZONTAL
+
+PLOT
+281
+452
+517
+644
+Average Wealth
+Time
+Avg Wealth
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -14454117 true "" "plot (mean [wealth] of turtles)"
 
 @#$#@#$#@
 ## WHAT IS IT?
