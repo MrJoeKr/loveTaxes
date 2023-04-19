@@ -10,7 +10,7 @@ globals
   lorenz-points
   state-treasure ; total amount of state money
   poverty-fine   ; how much state pays for one under the poverty-limit
-  ; eat-price    ; price for eating is slider (constant)
+  eat-price    ; price for eating is slider (constant)
   ; grain-bonus  ; bonus for harvesting grain (%)
   dead-people    ; number of agents who died
 ]
@@ -45,8 +45,9 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set metabolism-max 15
-  set num-grain-grown 0.3 ;was 4
   set grain-growth-interval 1
+  set eat-price 1
+  set num-grain-grown 0.1
   ; our vars
   set state-treasure 0
   set poverty-fine 10
@@ -143,7 +144,9 @@ to go
   ]
 
   ask turtles
-  [ move-eat-age-die ]
+  [ move-eat ]
+
+  poor-die
 
   recolor-turtles
 
@@ -236,14 +239,38 @@ to harvest
   ;    recolor-patch ]
 end
 
+to-report harvested-amount-calc [grain]
+  ifelse
+    (class = 0.5) [
+    report 10
+  ] [ ifelse (class = 0.75) [
+    report 20
+  ]
+  [
+    report 30
+  ] ]
+end
+
 to harvest-wealth
-  let harvested-amount (grain-here * class)
+  ;let harvested-amount (grain-here * class / count turtles-here )
+  let harvested-amount (harvested-amount-calc grain-here)
+  set harvested-amount min (list harvested-amount max-grain-here)
   ; add bonus
-  set harvested-amount (harvested-amount + harvested-amount * grain-bonus / 100)
+  ; set harvested-amount (harvested-amount + harvested-amount * grain-bonus / 100)
 
   ;let harvested-amount ((grain-here * class) / (count turtles-here))
   ; tax the harvest
-  let taxed-amount ((tax * harvested-amount) / 100)
+  ; let taxed-amount ((tax * harvested-amount) / 100)
+  let taxed-amount 0
+  ifelse (class = 0.5) [
+    set taxed-amount ((harvested-amount * lower-tax) / 100)
+  ] [
+    ifelse (class = 0.75) [
+      set taxed-amount ((harvested-amount * middle-tax) / 100)
+    ] [
+      set taxed-amount ((harvested-amount * upper-tax) / 100)
+    ]
+  ]
 
   ; decrease grain-here according to the harvested amount
   set grain-here (grain-here - harvested-amount)
@@ -298,7 +325,7 @@ to be-kind
 
 end
 
-to move-eat-age-die  ;; turtle procedure
+to move-eat  ;; turtle procedure
   fd 1
 
   ;; consume some grain according to metabolism
@@ -316,7 +343,7 @@ to move-eat-age-die  ;; turtle procedure
   be-kind
 
   ; pay for agents who have fees
-  if (wealth < 0)
+  if (wealth < 2)
     [ set state-treasure (state-treasure - poverty-fine) ]
 
   ;; grow older
@@ -330,8 +357,12 @@ to move-eat-age-die  ;; turtle procedure
   ; if (age >= life-expectancy) or (wealth < 0)
   if wealth < 0
     [ ;set-initial-turtle-vars
-      die
+      ;die
       set dead-people (dead-people + 1) ]
+end
+
+to poor-die ;; turtle procedure
+  ask turtles with [wealth < 0] [ die ]
 end
 
 ;; this procedure recomputes the value of gini-index-reserve
@@ -363,9 +394,9 @@ end
 ; See Info tab for full copyright and license.
 @#$#@#$#@
 GRAPHICS-WINDOW
-184
+185
 10
-600
+601
 427
 -1
 -1
@@ -424,30 +455,15 @@ NIL
 0
 
 SLIDER
-8
-72
-176
-105
-max-vision
-max-vision
-1
-15
-5.0
-1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-8
-31
-176
-64
+11
+62
+179
+95
 num-people
 num-people
 2
 1000
-307.0
+213.0
 1
 1
 NIL
@@ -462,7 +478,7 @@ percent-best-land
 percent-best-land
 5
 25
-25.0
+16.0
 1
 1
 %
@@ -507,30 +523,15 @@ PENS
 "default" 1.0 1 -2674135 true "" "plot-pen-reset\nset-plot-pen-color red\nplot count turtles with [color = red]\nset-plot-pen-color green\nplot count turtles with [color = green]\nset-plot-pen-color blue\nplot count turtles with [color = blue]"
 
 SLIDER
-7
-152
-179
-185
-tax
-tax
-0
-100
-91.0
-1
-1
-%
-HORIZONTAL
-
-SLIDER
-7
-196
-179
-229
+6
+150
+178
+183
 charity
 charity
 0
 100
-80.0
+0.0
 1
 1
 %
@@ -570,7 +571,10 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -14454117 true "" "plot (mean [wealth] of turtles)"
+"default" 1.0 0 -16449023 true "" "plot (mean [wealth] of turtles)"
+"low-average" 1.0 0 -2674135 true "" "plot (mean [wealth] of turtles with [class = 0.5])"
+"mid-average" 1.0 0 -13840069 true "" "plot (mean [wealth] of turtles with [class = 0.75])"
+"up-average" 1.0 0 -13345367 true "" "plot (mean [wealth] of turtles with [class = 1])"
 
 PLOT
 612
@@ -592,29 +596,44 @@ PENS
 
 SLIDER
 6
-236
+190
 179
-269
-eat-price
-eat-price
+224
+lower-tax
+lower-tax
 0
+100
+35.0
 1
-0.2
-0.01
 1
-NIL
+%
 HORIZONTAL
 
 SLIDER
 6
-281
+229
 179
-314
-grain-bonus
-grain-bonus
+263
+middle-tax
+middle-tax
 0
 100
-0.0
+35.0
+1
+1
+%
+HORIZONTAL
+
+SLIDER
+8
+268
+181
+302
+upper-tax
+upper-tax
+0
+100
+35.0
 1
 1
 %
