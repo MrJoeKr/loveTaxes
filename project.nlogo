@@ -10,8 +10,8 @@ globals
   lorenz-points
   state-treasure ; total amount of state money
   poverty-fine   ; how much state pays for one under the poverty-limit
-  ; eat-price    ; price for eating is slider
-  ; grain-bonus  ; bonus for harvesting grain
+  ; eat-price    ; price for eating is slider (constant)
+  ; grain-bonus  ; bonus for harvesting grain (%)
   dead-people    ; number of agents who died
 ]
 
@@ -41,7 +41,7 @@ turtles-own
 to setup
   clear-all
   ;; set global variables to appropriate values
-  set max-grain 50
+  set max-grain 100
   set life-expectancy-min 1
   set life-expectancy-max 83
   set metabolism-max 15
@@ -101,7 +101,9 @@ to set-initial-turtle-vars
   set life-expectancy life-expectancy-min +
                         random (life-expectancy-max - life-expectancy-min + 1)
   set metabolism 1 + random metabolism-max
-  set wealth metabolism + random 50
+  ;set wealth metabolism + random 50
+  ;; set wealth deterministic
+  set wealth 10
   set vision 1 ;+ random max-vision
   set age random life-expectancy
 end
@@ -176,12 +178,14 @@ end
 
 ;; turtles move about at random.
 to turn-random  ;; turtle procedure
-  rt random 100
-  lt random 100
+  ;; all random
+  ;rt random 100
+  ;lt random 100
 
-  ;let possible-directions [0 90 180 270]
-  ;let random-direction item random length possible-directions possible-directions
-  ;set heading random-direction
+  ;; up down left right option
+  let possible-directions [0 90 180 270]
+  let random-direction item random length possible-directions possible-directions
+  set heading random-direction
 end
 
 to-report grain-ahead  ;; turtle procedure
@@ -274,10 +278,12 @@ to be-kind
     [ stop ]
 
   ;; set patches around the agent
-  let neighbor-patches patch-set patches in-radius 1 with [distance myself > 0]
+  ;let neighbor-patches patch-set patches in-radius 1 with [distance myself > 0]
+
+  ;print neighbor-patches
 
   ;; do not put more grain than max-grain-here
-  ask neighbor-patches
+  ask neighbors
   [
     let grain-amount (max-grain-here - grain-here)
     if charity-amount - grain-amount >= 0
@@ -296,8 +302,6 @@ to move-eat-age-die  ;; turtle procedure
   fd 1
 
   ;; consume some grain according to metabolism
-
-  ; Was before
   ; set wealth (wealth - metabolism)
 
   ;; eat
@@ -435,9 +439,9 @@ HORIZONTAL
 
 SLIDER
 8
-38
+31
 176
-71
+64
 num-people
 num-people
 2
@@ -484,10 +488,10 @@ PENS
 "up" 1.0 0 -13345367 true "" "plot count turtles with [color = blue]"
 
 PLOT
-612
-44
-824
-224
+526
+451
+759
+648
 Class Histogram
 Classes
 Turtles
@@ -510,7 +514,7 @@ tax
 tax
 0
 100
-14.0
+5.0
 1
 1
 %
@@ -525,7 +529,7 @@ charity
 charity
 0
 100
-39.0
+81.0
 1
 1
 %
@@ -547,13 +551,13 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -5298144 true "" "plot (state-treasure / num-people)"
+"default" 1.0 0 -14439633 true "" "plot (state-treasure / num-people)"
 
 PLOT
-281
-452
-517
-644
+270
+453
+506
+645
 Average Wealth
 Time
 Avg Wealth
@@ -568,10 +572,10 @@ PENS
 "default" 1.0 0 -14454117 true "" "plot (mean [wealth] of turtles)"
 
 PLOT
-537
-457
-781
-642
+612
+27
+860
+219
 Died in total
 Time
 Total Dead
@@ -594,7 +598,7 @@ eat-price
 eat-price
 0
 1
-0.69
+0.0
 0.01
 1
 NIL
@@ -609,7 +613,7 @@ grain-bonus
 grain-bonus
 0
 1
-0.1
+0.0
 0.01
 1
 NIL
