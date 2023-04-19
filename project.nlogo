@@ -123,8 +123,9 @@ end
 ;;;
 
 to go
-  ask turtles
-    [ turn-towards-grain ]  ;; choose direction holding most grain within the turtle's vision
+  ;ask turtles
+  ;  [ turn-towards-grain ]  ;; choose direction holding most grain within the turtle's vision
+
   compute-class ;; determine social class of turtle
 
   ;TODO
@@ -134,7 +135,10 @@ to go
   ]
 
   ask turtles
-  [ turn-towards-grain ]
+  [
+    ;turn-towards-grain
+    turn-random
+  ]
 
   ask turtles
   [ move-eat-age-die ]
@@ -170,6 +174,16 @@ to turn-towards-grain  ;; turtle procedure
   set heading best-direction
 end
 
+;; turtles move about at random.
+to turn-random  ;; turtle procedure
+  rt random 100
+  lt random 100
+
+  ;let possible-directions [0 90 180 270]
+  ;let random-direction item random length possible-directions possible-directions
+  ;set heading random-direction
+end
+
 to-report grain-ahead  ;; turtle procedure
   let total 0
   let how-far 1
@@ -200,8 +214,9 @@ to grow-grain  ;; patch procedure
   recolor-patch
 end
 
-;; each turtle harvests the grain on its patch.  if there are multiple
-;; turtles on a patch, divide the grain evenly among the turtles
+;; each turtle harvests the grain on its patch
+;; right now, agent takes as much grain as they can
+;; according to the class
 to harvest
   harvest-wealth
   recolor-patch
@@ -435,9 +450,9 @@ HORIZONTAL
 
 SLIDER
 8
-108
+109
 176
-141
+142
 percent-best-land
 percent-best-land
 5
@@ -488,29 +503,29 @@ PENS
 
 SLIDER
 7
-144
+152
 179
-177
+185
 tax
 tax
 0
 100
-10.0
+14.0
 1
 1
 %
 HORIZONTAL
 
 SLIDER
-6
+7
+196
 179
-178
-212
+229
 charity
 charity
 0
 100
-20.0
+39.0
 1
 1
 %
@@ -572,29 +587,29 @@ PENS
 
 SLIDER
 6
-220
+236
 179
-254
+269
 eat-price
 eat-price
 0
 1
-0.8
+0.69
 0.01
 1
 NIL
 HORIZONTAL
 
 SLIDER
-7
-260
-180
-294
+6
+281
+179
+314
 grain-bonus
 grain-bonus
 0
 1
-0.02
+0.1
 0.01
 1
 NIL
@@ -1007,7 +1022,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.3.0
+NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
