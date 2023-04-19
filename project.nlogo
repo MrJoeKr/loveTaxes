@@ -45,11 +45,11 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set metabolism-max 15
-  set num-grain-grown 0 ;was 4
+  set num-grain-grown 0.3 ;was 4
   set grain-growth-interval 1
   ; our vars
   set state-treasure 0
-  set poverty-fine 1
+  set poverty-fine 10
   set dead-people 0
   ;;;;;;
   ;; call other procedures to set up various parts of the world
@@ -239,7 +239,7 @@ end
 to harvest-wealth
   let harvested-amount (grain-here * class)
   ; add bonus
-  set harvested-amount (harvested-amount + harvested-amount * grain-bonus)
+  set harvested-amount (harvested-amount + harvested-amount * grain-bonus / 100)
 
   ;let harvested-amount ((grain-here * class) / (count turtles-here))
   ; tax the harvest
@@ -329,7 +329,8 @@ to move-eat-age-die  ;; turtle procedure
   ; Do not die for being too old for now
   ; if (age >= life-expectancy) or (wealth < 0)
   if wealth < 0
-    [ set-initial-turtle-vars
+    [ ;set-initial-turtle-vars
+      die
       set dead-people (dead-people + 1) ]
 end
 
@@ -446,7 +447,7 @@ num-people
 num-people
 2
 1000
-203.0
+307.0
 1
 1
 NIL
@@ -514,7 +515,7 @@ tax
 tax
 0
 100
-5.0
+91.0
 1
 1
 %
@@ -529,7 +530,7 @@ charity
 charity
 0
 100
-81.0
+80.0
 1
 1
 %
@@ -598,7 +599,7 @@ eat-price
 eat-price
 0
 1
-0.0
+0.2
 0.01
 1
 NIL
@@ -612,11 +613,11 @@ SLIDER
 grain-bonus
 grain-bonus
 0
-1
+100
 0.0
-0.01
 1
-NIL
+1
+%
 HORIZONTAL
 
 @#$#@#$#@
@@ -1026,7 +1027,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.2
+NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
