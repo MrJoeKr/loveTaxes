@@ -293,7 +293,7 @@ end
 
 ; put grain according to the charity
 to be-kind
-  let charity-amount ((wealth * charity) / 100)
+  let charity-amount ((wealth - (eat-price * max-ticks-in-poverty * 2)) * charity / 100)
 
   set wealth (wealth - charity-amount)
 
@@ -454,7 +454,7 @@ percent-best-land
 percent-best-land
 5
 25
-16.0
+25.0
 1
 1
 %
@@ -507,7 +507,7 @@ charity
 charity
 0
 100
-0.0
+5.0
 1
 1
 %
@@ -609,7 +609,7 @@ upper-tax
 upper-tax
 0
 100
-16.0
+9.0
 1
 1
 %
@@ -1022,7 +1022,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.3.0
+NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
