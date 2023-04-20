@@ -11,6 +11,7 @@ globals
   dead-people    ; number of agents who died
   starting-wealth ; starting wealth of turtles
   max-ticks-in-poverty ; how many turns in poverty before death
+  dead-fine
 ]
 
 patches-own
@@ -42,14 +43,15 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set grain-growth-interval 1
-  set eat-price 10
-  set num-grain-grown 0.1
+  set eat-price 5
+  set num-grain-grown 5
   ; our vars
   set state-treasure 0
   set poverty-fine 25
   set dead-people 0
   set starting-wealth 25
   set max-ticks-in-poverty 5
+  set dead-fine 100
   ;;;;;;
   ;; call other procedures to set up various parts of the world
   setup-patches
@@ -330,6 +332,7 @@ to poor-die ;; turtle procedure
   ask turtles [
     if (ticks-in-poverty = max-ticks-in-poverty) [
       set dead-people (dead-people + 1)
+      set state-treasure (state-treasure - dead-fine)
     ]
   ]
   ask turtles with [ticks-in-poverty = max-ticks-in-poverty] [
@@ -411,7 +414,7 @@ num-people
 num-people
 2
 1000
-315.0
+733.0
 1
 1
 NIL
@@ -426,7 +429,7 @@ percent-best-land
 percent-best-land
 5
 25
-25.0
+12.0
 1
 1
 %
@@ -479,7 +482,7 @@ charity
 charity
 0
 100
-0.0
+8.0
 1
 1
 %
@@ -551,7 +554,7 @@ lower-tax
 lower-tax
 0
 100
-8.0
+11.0
 1
 1
 %
@@ -566,7 +569,7 @@ middle-tax
 middle-tax
 0
 100
-11.0
+42.0
 1
 1
 %
@@ -581,11 +584,29 @@ upper-tax
 upper-tax
 0
 100
-9.0
+55.0
 1
 1
 %
 HORIZONTAL
+
+PLOT
+766
+452
+1017
+648
+Below poverty
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -2674135 true "" "plot (count turtles with [ticks-in-poverty > 0])"
 
 @#$#@#$#@
 ## WHAT IS IT?
