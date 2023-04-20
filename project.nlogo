@@ -8,7 +8,6 @@ globals
   state-treasure ; total amount of state money
   poverty-fine   ; how much state pays for one under the poverty-limit
   eat-price    ; price for eating is slider (constant)
-  ; grain-bonus  ; bonus for harvesting grain (%)
   dead-people    ; number of agents who died
   starting-wealth ; starting wealth of turtles
   max-ticks-in-poverty ; how many turns in poverty before death
@@ -122,12 +121,8 @@ end
 ;;;
 
 to go
-  ;ask turtles
-  ;  [ turn-towards-grain ]  ;; choose direction holding most grain within the turtle's vision
-
   compute-class ;; determine social class of turtle
 
-  ;TODO
   ask turtles
   [
     harvest
@@ -149,8 +144,6 @@ to go
   ;; grow grain every grain-growth-interval clock ticks
   if ticks mod grain-growth-interval = 0
     [ ask patches [ grow-grain ] ]
-
-  ;update-lorenz-and-gini
   tick
 end
 
@@ -223,19 +216,9 @@ end
 to harvest
   harvest-wealth
   recolor-patch
-  ; have turtles harvest before any turtle sets the patch to 0
-  ;ask turtles
-  ;  [
-  ;    harvest-wealth
-  ;  ]
-  ;; now that the grain has been harvested, have the turtles make the
-  ;; patches which they are on have no grain
-  ;ask turtles
-  ; [ set grain-here 0
-  ;    recolor-patch ]
 end
 
-to-report harvested-amount-calc [grain]
+to-report harvested-amount-calc
   ifelse
     (class = 0.5) [
     report 10
@@ -249,8 +232,11 @@ end
 
 to harvest-wealth
   ;let harvested-amount (grain-here * class / count turtles-here )
-  let harvested-amount (harvested-amount-calc grain-here)
-  set harvested-amount min (list harvested-amount max-grain-here)
+  let harvested-amount (min (list harvested-amount-calc max-grain-here))
+
+  if (harvested-amount > grain-here) [ stop ]
+
+
   ; add bonus
   ; set harvested-amount (harvested-amount + harvested-amount * grain-bonus / 100)
 
@@ -282,6 +268,8 @@ end
 
 ; compute class for the turtle
 to compute-class
+  if (count turtles = 0) [ stop ]
+
   let max-wealth max [wealth] of turtles
   ask turtles
     [ ifelse (wealth <= max-wealth / 3)
@@ -322,21 +310,9 @@ to be-kind
 end
 
 to move-eat  ;; turtle procedure
-  fd 1
-
-  ;; consume some grain according to metabolism
-  ; set wealth (wealth - metabolism)
-
-  ;; eat
-  set wealth (wealth - eat-price)
-
-  ;; take money from state if under poverty limit
-  ;if wealth < poverty-limit [
-  ;    set state-treasure (state-treasure - poverty-fine)
-  ;]
-
-  ;; set grain around
-  be-kind
+  if (random-float 1 < 0.5) [
+    fd 1
+  ]
 
   ; pay for agents who have fees
   ifelse (wealth < eat-price) [
@@ -344,14 +320,10 @@ to move-eat  ;; turtle procedure
       set ticks-in-poverty (ticks-in-poverty + 1)
   ] [
       set ticks-in-poverty 0
+      set wealth (wealth - eat-price)
   ]
 
-  ;; grow older
-  ; set age (age + 1)
-  ;; check for death conditions: if you have no grain or
-  ;; you're older than the life expectancy or if some random factor
-  ;; holds, then you "die" and are "reborn" (in fact, your variables
-  ;; are just reset to new random values)
+  be-kind
 end
 
 to poor-die ;; turtle procedure
@@ -439,7 +411,7 @@ num-people
 num-people
 2
 1000
-1000.0
+315.0
 1
 1
 NIL
@@ -507,7 +479,7 @@ charity
 charity
 0
 100
-5.0
+0.0
 1
 1
 %
@@ -1022,7 +994,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.2
+NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
