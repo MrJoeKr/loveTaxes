@@ -3,16 +3,15 @@ globals
   max-grain    ; maximum amount any patch can hold
   life-expectancy-min
   life-expectancy-max
-  metabolism-max
   num-grain-grown
   grain-growth-interval
-  gini-index-reserve
-  lorenz-points
   state-treasure ; total amount of state money
   poverty-fine   ; how much state pays for one under the poverty-limit
   eat-price    ; price for eating is slider (constant)
   ; grain-bonus  ; bonus for harvesting grain (%)
   dead-people    ; number of agents who died
+  starting-wealth ; starting wealth of turtles
+  max-ticks-in-poverty ; how many turns in poverty before death
 ]
 
 patches-own
@@ -23,15 +22,14 @@ patches-own
 
 turtles-own
 [
-  age              ; how old a turtle is
   wealth           ; the amount of grain a turtle has
   life-expectancy  ; maximum age that a turtle can reach
-  metabolism       ; how much grain a turtle eats each time
   vision           ; how many patches ahead a turtle can see
   class            ; what social class is in, based on wealth
                    ; 0.5 - lower (0-25%)
                    ; 0.75 - middle (25-75%)
                    ; 1 - high (75-100%)
+  ticks-in-poverty ; how many turns is turtle below eat-price
 ]
 
 ;;;
@@ -44,14 +42,15 @@ to setup
   set max-grain 100
   set life-expectancy-min 1
   set life-expectancy-max 83
-  set metabolism-max 15
   set grain-growth-interval 1
-  set eat-price 1
+  set eat-price 10
   set num-grain-grown 0.1
   ; our vars
   set state-treasure 0
-  set poverty-fine 10
+  set poverty-fine 25
   set dead-people 0
+  set starting-wealth 25
+  set max-ticks-in-poverty 5
   ;;;;;;
   ;; call other procedures to set up various parts of the world
   setup-patches
@@ -101,12 +100,9 @@ to set-initial-turtle-vars
   face one-of neighbors4
   set life-expectancy life-expectancy-min +
                         random (life-expectancy-max - life-expectancy-min + 1)
-  set metabolism 1 + random metabolism-max
-  ;set wealth metabolism + random 50
   ;; set wealth deterministic
-  set wealth 10
-  set vision 1 ;+ random max-vision
-  set age random life-expectancy
+  set wealth starting-wealth
+  set ticks-in-poverty 0
 end
 
 ;; Set the class of the turtles -- if a turtle has less than a third
@@ -343,8 +339,12 @@ to move-eat  ;; turtle procedure
   be-kind
 
   ; pay for agents who have fees
-  if (wealth < 2)
-    [ set state-treasure (state-treasure - poverty-fine) ]
+  ifelse (wealth < eat-price) [
+      set state-treasure (state-treasure - poverty-fine)
+      set ticks-in-poverty (ticks-in-poverty + 1)
+  ] [
+      set ticks-in-poverty 0
+  ]
 
   ;; grow older
   ; set age (age + 1)
@@ -352,40 +352,16 @@ to move-eat  ;; turtle procedure
   ;; you're older than the life expectancy or if some random factor
   ;; holds, then you "die" and are "reborn" (in fact, your variables
   ;; are just reset to new random values)
-
-  ; Do not die for being too old for now
-  ; if (age >= life-expectancy) or (wealth < 0)
-  if wealth < 0
-    [ ;set-initial-turtle-vars
-      ;die
-      set dead-people (dead-people + 1) ]
 end
 
 to poor-die ;; turtle procedure
-  ask turtles with [wealth < 0] [ die ]
-end
-
-;; this procedure recomputes the value of gini-index-reserve
-;; and the points in lorenz-points for the Lorenz and Gini-Index plots
-to update-lorenz-and-gini
-  let sorted-wealths sort [wealth] of turtles
-  let total-wealth sum sorted-wealths
-  let wealth-sum-so-far 0
-  let index 0
-  set gini-index-reserve 0
-  set lorenz-points []
-
-  ;; now actually plot the Lorenz curve -- along the way, we also
-  ;; calculate the Gini index.
-  ;; (see the Info tab for a description of the curve and measure)
-  repeat num-people [
-    set wealth-sum-so-far (wealth-sum-so-far + item index sorted-wealths)
-    set lorenz-points lput ((wealth-sum-so-far / total-wealth) * 100) lorenz-points
-    set index (index + 1)
-    set gini-index-reserve
-      gini-index-reserve +
-      (index / num-people) -
-      (wealth-sum-so-far / total-wealth)
+  ask turtles [
+    if (ticks-in-poverty = max-ticks-in-poverty) [
+      set dead-people (dead-people + 1)
+    ]
+  ]
+  ask turtles with [ticks-in-poverty = max-ticks-in-poverty] [
+    die
   ]
 end
 
@@ -463,7 +439,7 @@ num-people
 num-people
 2
 1000
-213.0
+1000.0
 1
 1
 NIL
@@ -598,12 +574,12 @@ SLIDER
 6
 190
 179
-224
+223
 lower-tax
 lower-tax
 0
 100
-35.0
+8.0
 1
 1
 %
@@ -613,12 +589,12 @@ SLIDER
 6
 229
 179
-263
+262
 middle-tax
 middle-tax
 0
 100
-35.0
+11.0
 1
 1
 %
@@ -628,12 +604,12 @@ SLIDER
 8
 268
 181
-302
+301
 upper-tax
 upper-tax
 0
 100
-35.0
+16.0
 1
 1
 %
