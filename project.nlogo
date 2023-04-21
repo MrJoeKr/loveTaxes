@@ -314,6 +314,17 @@ to move-eat  ;; turtle procedure
   be-kind
 end
 
+;; Plot according to class
+;; if cl = 0 plot all classes
+to-report avg-wealth [cl]
+  if cl = 0 [ report mean [wealth] of turtles ]
+
+  let cl-turtles [wealth] of turtles with [class = cl]
+
+  ifelse empty? cl-turtles [ report 0 ]
+  [ report mean cl-turtles ]
+end
+
 to poor-die ;; turtle procedure
   ask turtles [
     if (ticks-in-poverty = max-ticks-in-poverty) [
@@ -468,7 +479,7 @@ charity
 charity
 0
 100
-38.0
+23.0
 1
 1
 %
@@ -508,10 +519,10 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16449023 true "" "plot (mean [wealth] of turtles)"
-"low-average" 1.0 0 -2674135 true "" "plot (mean [wealth] of turtles with [class = 0.5])"
-"mid-average" 1.0 0 -13840069 true "" "plot (mean [wealth] of turtles with [class = 0.75])"
-"up-average" 1.0 0 -13345367 true "" "plot (mean [wealth] of turtles with [class = 1])"
+"default" 1.0 0 -16449023 true "" "plot avg-wealth 0"
+"low-average" 1.0 0 -2674135 true "" "plot avg-wealth 0.5"
+"mid-average" 1.0 0 -13840069 true "" "plot avg-wealth 0.75\n"
+"up-average" 1.0 0 -13345367 true "" "plot avg-wealth 1"
 
 PLOT
 612
