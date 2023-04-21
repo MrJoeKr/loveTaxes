@@ -1,8 +1,6 @@
 globals
 [
   max-grain    ; maximum amount any patch can hold
-  life-expectancy-min
-  life-expectancy-max
   num-grain-grown
   grain-growth-interval
   state-treasure ; total amount of state money
@@ -40,12 +38,9 @@ to setup
   clear-all
   ;; set global variables to appropriate values
   set max-grain 100
-  set life-expectancy-min 1
-  set life-expectancy-max 83
   set grain-growth-interval 1
   set eat-price 0.3
   set num-grain-grown 0.1
-  ; our vars
   set state-treasure 0
   set poverty-fine 25
   set dead-people 0
@@ -99,8 +94,6 @@ end
 
 to set-initial-turtle-vars
   face one-of neighbors4
-  set life-expectancy life-expectancy-min +
-                        random (life-expectancy-max - life-expectancy-min + 1)
   ;; set wealth deterministic
   set wealth starting-wealth
   set ticks-in-poverty 0
@@ -414,7 +407,7 @@ num-people
 num-people
 2
 1000
-385.0
+253.0
 1
 1
 NIL
