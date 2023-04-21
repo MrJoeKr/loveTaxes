@@ -271,17 +271,11 @@ end
 to be-kind
   let charity-amount ((wealth - (eat-price * max-ticks-in-poverty * 2)) * charity / 100)
 
+  if charity-amount <= 0 [ stop ]
+
   set wealth (wealth - charity-amount)
 
-  if wealth <= 0
-    [ stop ]
-
   ;; set patches around the agent
-  ;let neighbor-patches patch-set patches in-radius 1 with [distance myself > 0]
-
-  ;print neighbor-patches
-
-  ;; do not put more grain than max-grain-here
   ask neighbors
   [
     let grain-amount (max-grain-here - grain-here)
@@ -479,7 +473,7 @@ charity
 charity
 0
 100
-23.0
+35.0
 1
 1
 %
