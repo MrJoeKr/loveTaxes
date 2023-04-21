@@ -43,13 +43,8 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set grain-growth-interval 1
-<<<<<<< HEAD
   set eat-price 0.3
   set num-grain-grown 0.1
-=======
-  set eat-price 5
-  set num-grain-grown 5
->>>>>>> 335522e5eec5ee4611bdd6e4d49e0b5295159b41
   ; our vars
   set state-treasure 0
   set poverty-fine 25
@@ -419,11 +414,7 @@ num-people
 num-people
 2
 1000
-<<<<<<< HEAD
 385.0
-=======
-733.0
->>>>>>> 335522e5eec5ee4611bdd6e4d49e0b5295159b41
 1
 1
 NIL
@@ -491,11 +482,7 @@ charity
 charity
 0
 100
-<<<<<<< HEAD
 22.0
-=======
-8.0
->>>>>>> 335522e5eec5ee4611bdd6e4d49e0b5295159b41
 1
 1
 %
@@ -567,11 +554,7 @@ lower-tax
 lower-tax
 0
 100
-<<<<<<< HEAD
 6.0
-=======
-11.0
->>>>>>> 335522e5eec5ee4611bdd6e4d49e0b5295159b41
 1
 1
 %
@@ -586,11 +569,7 @@ middle-tax
 middle-tax
 0
 100
-<<<<<<< HEAD
 6.0
-=======
-42.0
->>>>>>> 335522e5eec5ee4611bdd6e4d49e0b5295159b41
 1
 1
 %
@@ -605,11 +584,7 @@ upper-tax
 upper-tax
 0
 100
-<<<<<<< HEAD
 6.0
-=======
-55.0
->>>>>>> 335522e5eec5ee4611bdd6e4d49e0b5295159b41
 1
 1
 %
