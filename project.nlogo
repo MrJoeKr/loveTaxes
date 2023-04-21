@@ -39,7 +39,7 @@ to setup
   set max-grain 100
   set grain-growth-interval 1
   ;; TO BE BALANCED
-  set eat-price 0.5
+  set eat-price 1
   set num-grain-grown 0.1
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
@@ -373,10 +373,10 @@ NIL
 0
 
 SLIDER
-11
-62
-179
-95
+10
+67
+178
+100
 num-people
 num-people
 2
@@ -449,7 +449,7 @@ charity
 charity
 0
 100
-5.0
+7.0
 1
 1
 %
