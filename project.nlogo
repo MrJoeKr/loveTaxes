@@ -39,19 +39,19 @@ to setup
   ;; set global variables to appropriate values
   set max-grain 100
   set grain-growth-interval 1
-  set eat-price 0.3
+  ; TO BE BALANCED
+  set eat-price 0.5
   set num-grain-grown 0.1
+  ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
   set poverty-fine 25
   set dead-people 0
   set starting-wealth 25
   set max-ticks-in-poverty 5
   set dead-fine 100
-  ;;;;;;
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
-  ;update-lorenz-and-gini
   reset-ticks
 end
 
@@ -407,7 +407,7 @@ num-people
 num-people
 2
 1000
-253.0
+250.0
 1
 1
 NIL
@@ -422,7 +422,7 @@ percent-best-land
 percent-best-land
 5
 25
-12.0
+16.0
 1
 1
 %
@@ -475,7 +475,7 @@ charity
 charity
 0
 100
-22.0
+38.0
 1
 1
 %
