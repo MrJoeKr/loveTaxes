@@ -25,7 +25,6 @@ turtles-own
   vision           ; how many patches ahead a turtle can see
   class            ; what social class is in, based on wealth
                    ; 0.5 - lower (0-25%)
-                   ; 0.75 - middle (25-75%)
                    ; 1 - high (75-100%)
   ticks-in-poverty ; how many turns is turtle below eat-price
 ]
@@ -104,11 +103,7 @@ end
 ;; and two thirds, color it green.  If over two thirds, color it blue.
 to recolor-turtles
   ask turtles
-    [ ifelse (class = 0.5) ; low
-        [ set color red ]
-        [ ifelse (class = 0.75) ; middle
-            [ set color green ]
-            [ set color blue ] ] ]
+    [ set color choose-by-class red blue ]
 end
 
 ;;;
@@ -210,20 +205,14 @@ to harvest
 end
 
 to-report harvested-amount-calc
-  report choose-by-class 10 20 30
+  report choose-by-class 10 30
 end
 
 ;; Choose by class from lower up to upper
-to-report choose-by-class [a b c]
+to-report choose-by-class [a b]
   ifelse class = 0.5
-  [
-    report a
-  ] [
-  ifelse class = 0.75 [
-    report b
-  ] [
-    report c
-  ] ]
+  [ report a ]
+  [ report b ]
 end
 
 to harvest-wealth
@@ -234,7 +223,7 @@ to harvest-wealth
   ; decrease grain-here according to the harvested amount
   set grain-here (grain-here - harvested-amount)
 
-  let taxed-amount (choose-by-class lower-tax middle-tax upper-tax) * harvested-amount / 100
+  let taxed-amount (choose-by-class lower-tax upper-tax) * harvested-amount / 100
 
   set state-treasure (state-treasure + taxed-amount)
 
@@ -248,11 +237,10 @@ to compute-class
 
   let max-wealth max [wealth] of turtles
   ask turtles
-    [ ifelse (wealth <= max-wealth / 3)
+    [ ifelse (wealth <= max-wealth / 2)
         [ set class 0.5 ]
-        [ ifelse (wealth <= (max-wealth * 2 / 3))
-            [ set class 0.75 ]
-            [ set class 1 ] ] ]
+        [ set class 1 ]
+    ]
 end
 
 ; put grain according to the charity
@@ -461,7 +449,7 @@ charity
 charity
 0
 100
-35.0
+5.0
 1
 1
 %
