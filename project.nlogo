@@ -42,7 +42,7 @@ to setup
   set life-expectancy-min 1
   set life-expectancy-max 83
   set grain-growth-interval 1
-  set eat-price 10
+  set eat-price 0.3
   set num-grain-grown 0.1
   ; our vars
   set state-treasure 0
@@ -231,8 +231,8 @@ to-report harvested-amount-calc
 end
 
 to harvest-wealth
-  ;let harvested-amount (grain-here * class / count turtles-here )
-  let harvested-amount (min (list harvested-amount-calc max-grain-here))
+  ; Distribute grain evenly
+  let harvested-amount (min (list harvested-amount-calc max-grain-here) / count turtles-here)
 
   if (harvested-amount > grain-here) [ stop ]
 
@@ -411,7 +411,7 @@ num-people
 num-people
 2
 1000
-315.0
+385.0
 1
 1
 NIL
@@ -479,7 +479,7 @@ charity
 charity
 0
 100
-0.0
+22.0
 1
 1
 %
@@ -551,7 +551,7 @@ lower-tax
 lower-tax
 0
 100
-8.0
+6.0
 1
 1
 %
@@ -566,7 +566,7 @@ middle-tax
 middle-tax
 0
 100
-11.0
+6.0
 1
 1
 %
@@ -581,7 +581,7 @@ upper-tax
 upper-tax
 0
 100
-9.0
+6.0
 1
 1
 %
@@ -994,7 +994,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.3.0
+NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
