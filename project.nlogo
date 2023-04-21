@@ -232,18 +232,13 @@ end
 
 to harvest-wealth
   ; Distribute grain evenly
-  let harvested-amount (min (list harvested-amount-calc max-grain-here) / count turtles-here)
-
-  if (harvested-amount > grain-here) [ stop ]
-
-  ;let harvested-amount ((grain-here * class) / (count turtles-here))
-  ; tax the harvest
-  ; let taxed-amount ((tax * harvested-amount) / 100)
-
-  let taxed-amount (choose-by-class lower-tax middle-tax upper-tax) * harvested-amount / 100
+  ; Choose either the amount the agent can take or less otherwise
+  let harvested-amount (min (list harvested-amount-calc grain-here) / count turtles-here)
 
   ; decrease grain-here according to the harvested amount
   set grain-here (grain-here - harvested-amount)
+
+  let taxed-amount (choose-by-class lower-tax middle-tax upper-tax) * harvested-amount / 100
 
   set state-treasure (state-treasure + taxed-amount)
 
