@@ -381,7 +381,7 @@ num-people
 num-people
 2
 1000
-250.0
+258.0
 1
 1
 NIL
@@ -419,8 +419,8 @@ true
 "set-plot-y-range 0 num-people" ""
 PENS
 "low" 1.0 0 -2674135 true "" "plot count turtles with [color = red]"
-"mid" 1.0 0 -10899396 true "" "plot count turtles with [color = green]"
 "up" 1.0 0 -13345367 true "" "plot count turtles with [color = blue]"
+"both" 1.0 0 -16777216 true "" "plot count turtles"
 
 PLOT
 526
@@ -431,14 +431,14 @@ Class Histogram
 Classes
 Turtles
 0.0
-3.0
+2.0
 0.0
 250.0
 false
 false
 "set-plot-y-range 0 num-people" ""
 PENS
-"default" 1.0 1 -2674135 true "" "plot-pen-reset\nset-plot-pen-color red\nplot count turtles with [color = red]\nset-plot-pen-color green\nplot count turtles with [color = green]\nset-plot-pen-color blue\nplot count turtles with [color = blue]"
+"default" 1.0 1 -2674135 true "" "plot-pen-reset\nset-plot-pen-color red\nplot count turtles with [color = red]\nset-plot-pen-color blue\nplot count turtles with [color = blue]"
 
 SLIDER
 6
@@ -449,7 +449,7 @@ charity
 charity
 0
 100
-7.0
+6.0
 1
 1
 %
@@ -486,13 +486,12 @@ Avg Wealth
 0.0
 10.0
 true
-false
+true
 "" ""
 PENS
-"default" 1.0 0 -16449023 true "" "plot avg-wealth 0"
-"low-average" 1.0 0 -2674135 true "" "plot avg-wealth 0.5"
-"mid-average" 1.0 0 -13840069 true "" "plot avg-wealth 0.75\n"
-"up-average" 1.0 0 -13345367 true "" "plot avg-wealth 1"
+"low" 1.0 0 -2674135 true "" "plot avg-wealth 0.5"
+"up" 1.0 0 -13345367 true "" "plot avg-wealth 1"
+"both" 1.0 0 -16777216 true "" "plot avg-wealth 0"
 
 PLOT
 612
