@@ -39,7 +39,7 @@ to setup
   ;; set global variables to appropriate values
   set max-grain 100
   set grain-growth-interval 1
-  ; TO BE BALANCED
+  ;; TO BE BALANCED
   set eat-price 0.5
   set num-grain-grown 0.1
   ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -214,14 +214,19 @@ to harvest
 end
 
 to-report harvested-amount-calc
-  ifelse
-    (class = 0.5) [
-    report 10
-  ] [ ifelse (class = 0.75) [
-    report 20
-  ]
+  report choose-by-class 10 20 30
+end
+
+;; Choose by class from lower up to upper
+to-report choose-by-class [a b c]
+  ifelse class = 0.5
   [
-    report 30
+    report a
+  ] [
+  ifelse class = 0.75 [
+    report b
+  ] [
+    report c
   ] ]
 end
 
@@ -231,23 +236,11 @@ to harvest-wealth
 
   if (harvested-amount > grain-here) [ stop ]
 
-
-  ; add bonus
-  ; set harvested-amount (harvested-amount + harvested-amount * grain-bonus / 100)
-
   ;let harvested-amount ((grain-here * class) / (count turtles-here))
   ; tax the harvest
   ; let taxed-amount ((tax * harvested-amount) / 100)
-  let taxed-amount 0
-  ifelse (class = 0.5) [
-    set taxed-amount ((harvested-amount * lower-tax) / 100)
-  ] [
-    ifelse (class = 0.75) [
-      set taxed-amount ((harvested-amount * middle-tax) / 100)
-    ] [
-      set taxed-amount ((harvested-amount * upper-tax) / 100)
-    ]
-  ]
+
+  let taxed-amount (choose-by-class lower-tax middle-tax upper-tax) * harvested-amount / 100
 
   ; decrease grain-here according to the harvested amount
   set grain-here (grain-here - harvested-amount)
