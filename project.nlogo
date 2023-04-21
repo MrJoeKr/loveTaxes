@@ -165,10 +165,6 @@ end
 
 ;; turtles move about at random.
 to turn-random  ;; turtle procedure
-  ;; all random
-  ;rt random 100
-  ;lt random 100
-
   ;; up down left right option
   let possible-directions [0 90 180 270]
   let random-direction item random length possible-directions possible-directions
@@ -242,9 +238,6 @@ to harvest-wealth
 
   set state-treasure (state-treasure + taxed-amount)
 
-  ; add to wealth according to the amount of harvested
-  ; This was before, not sure why we decrease here
-  ; set wealth (wealth - harvested-amount)
   let income (harvested-amount - taxed-amount)
   set wealth (wealth + income)
 end
