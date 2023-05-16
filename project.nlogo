@@ -126,7 +126,7 @@ to go
   ;]
 
   ask turtles
-  [ move-eat ]
+  [ move-eat-update ]
 
   poor-die
 
@@ -275,7 +275,7 @@ to be-kind
 
 end
 
-to move-eat  ;; turtle procedure
+to move-eat-update  ;; turtle procedure
   if (random-float 1 < 0.5) [
     fd 1
   ]
@@ -286,6 +286,7 @@ to move-eat  ;; turtle procedure
       set ticks-in-poverty (ticks-in-poverty + 1)
   ] [
       set ticks-in-poverty 0
+      ; Eat only if the agent has enough money to afford it
       set wealth (wealth - eat-price)
   ]
 
