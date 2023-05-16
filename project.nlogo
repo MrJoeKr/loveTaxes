@@ -527,21 +527,6 @@ lower-tax
 HORIZONTAL
 
 SLIDER
-6
-229
-179
-262
-middle-tax
-middle-tax
-0
-100
-6.0
-1
-1
-%
-HORIZONTAL
-
-SLIDER
 8
 268
 181
@@ -981,7 +966,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.2
+NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
