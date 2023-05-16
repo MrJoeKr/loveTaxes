@@ -465,7 +465,7 @@ charity
 charity
 0
 100
-6.0
+2.0
 1
 1
 %
@@ -558,10 +558,10 @@ upper-tax
 HORIZONTAL
 
 PLOT
-766
-452
-1017
-648
+777
+450
+1028
+646
 Below poverty
 NIL
 NIL
