@@ -39,14 +39,14 @@ to setup
   set max-grain 100
   set grain-growth-interval 1
   ;; TO BE BALANCED
-  set eat-price 1
-  set num-grain-grown 0.1
+  set eat-price 1 ; 1
+  set num-grain-grown 0.1 ; 0.1
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
   set poverty-fine 25
   set dead-people 0
-  set starting-wealth 25
-  set max-ticks-in-poverty 5
+  set starting-wealth 50 ; 20
+  set max-ticks-in-poverty 10 ; 5
   set dead-fine 100
   ;; call other procedures to set up various parts of the world
   setup-patches
@@ -116,13 +116,14 @@ to go
   ask turtles
   [
     harvest
-  ]
-
-  ask turtles
-  [
-    ;turn-towards-grain
     turn-random
   ]
+
+  ;ask turtles
+  ;[
+    ;turn-towards-grain
+    ;turn-random
+  ;]
 
   ask turtles
   [ move-eat ]
@@ -246,11 +247,15 @@ to compute-class
     ]
 end
 
-; put grain according to the charity
+; Put grain according to the charity parameter
 to be-kind
-  let charity-amount ((wealth - (eat-price * max-ticks-in-poverty * 2)) * charity / 100)
+  ; The amount that agent can give, excluding expenses for food
+  let food-expenses eat-price * max-ticks-in-poverty
+  let amount-can-give wealth - food-expenses
 
-  if charity-amount <= 0 [ stop ]
+  if amount-can-give <= 0 [ stop ]
+
+  let charity-amount (amount-can-give * charity / 100)
 
   set wealth (wealth - charity-amount)
 
@@ -384,7 +389,7 @@ num-people
 num-people
 2
 1000
-258.0
+250.0
 1
 1
 NIL
