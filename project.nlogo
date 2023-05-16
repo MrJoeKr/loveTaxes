@@ -43,7 +43,7 @@ to setup
   ;; TO BE BALANCED
   set eat-price 1 ; 1
   set num-grain-grown 0.1 ; 0.1
-  set lower-class-harvest-amount 10
+  set lower-class-harvest-amount 15
   set upper-class-harvest-amount 30
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
