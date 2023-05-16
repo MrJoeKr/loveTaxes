@@ -10,6 +10,8 @@ globals
   starting-wealth ; starting wealth of turtles
   max-ticks-in-poverty ; how many turns in poverty before death
   dead-fine
+  lower-class-harvest-amount
+  upper-class-harvest-amount
 ]
 
 patches-own
@@ -41,6 +43,8 @@ to setup
   ;; TO BE BALANCED
   set eat-price 1 ; 1
   set num-grain-grown 0.1 ; 0.1
+  set lower-class-harvest-amount 10
+  set upper-class-harvest-amount 30
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
   set poverty-fine 25
@@ -207,7 +211,7 @@ end
 
 ; Turtle procedure
 to-report harvested-amount-calc
-  report choose-by-class 10 30
+  report choose-by-class lower-class-harvest-amount upper-class-harvest-amount
 end
 
 ; Turtle procedure
