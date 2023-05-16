@@ -4,7 +4,7 @@ globals
   num-grain-grown
   grain-growth-interval
   state-treasure ; total amount of state money
-  poverty-fine   ; how much state pays for one under the poverty-limit
+  poverty-fine   ; The amount state pays for poor agents each tick
   eat-price    ; price for eating is slider (constant)
   dead-people    ; number of agents who died
   starting-wealth ; starting wealth of turtles
@@ -41,13 +41,13 @@ to setup
   set max-grain 100
   set grain-growth-interval 1
   ;; TO BE BALANCED
-  set eat-price 1 ; 1
+  set eat-price 0.9 ; 1
   set num-grain-grown 0.1 ; 0.1
   set lower-class-harvest-amount 15
   set upper-class-harvest-amount 30
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
-  set poverty-fine 25
+  set poverty-fine 0.75
   set dead-people 0
   set starting-wealth 50 ; 20
   set max-ticks-in-poverty 10 ; 5
@@ -132,7 +132,7 @@ to go
   ask turtles
   [ move-eat-update ]
 
-  poor-die
+  ; poor-die
 
   recolor-turtles
 
@@ -284,15 +284,18 @@ to move-eat-update  ;; turtle procedure
     fd 1
   ]
 
-  ; pay for agents who have fees
+
   ifelse (wealth < eat-price) [
       set state-treasure (state-treasure - poverty-fine)
+      ; State pays for agents who are in debt
       set ticks-in-poverty (ticks-in-poverty + 1)
   ] [
       set ticks-in-poverty 0
       ; Eat only if the agent has enough money to afford it
-      set wealth (wealth - eat-price)
+      ; set wealth (wealth - eat-price)
   ]
+
+  set wealth (wealth - eat-price)
 
   be-kind
 end
