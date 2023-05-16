@@ -204,10 +204,12 @@ to harvest
   recolor-patch
 end
 
+; Turtle procedure
 to-report harvested-amount-calc
   report choose-by-class 10 30
 end
 
+; Turtle procedure
 ;; Choose by class from lower up to upper
 to-report choose-by-class [a b]
   ifelse class = 0.5
@@ -215,8 +217,9 @@ to-report choose-by-class [a b]
   [ report b ]
 end
 
+; Turtle procedure
 to harvest-wealth
-  ; Distribute grain evenly
+  ; Distribute grain evenly amongst all the agents on one patch
   ; Choose either the amount the agent can take or less otherwise
   let harvested-amount (min (list harvested-amount-calc grain-here) / count turtles-here)
 
@@ -527,10 +530,10 @@ lower-tax
 HORIZONTAL
 
 SLIDER
-8
-268
-181
-301
+7
+230
+180
+263
 upper-tax
 upper-tax
 0
