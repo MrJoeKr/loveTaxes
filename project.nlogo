@@ -41,13 +41,13 @@ to setup
   set max-grain 100
   set grain-growth-interval 1
   ;; TO BE BALANCED
-  set eat-price 0.9 ; 1
+  set eat-price 0.9 ; 0.9 seems the best value
   set num-grain-grown 0.1 ; 0.1
   set lower-class-harvest-amount 15
   set upper-class-harvest-amount 30
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
-  set poverty-fine 0.75
+  set poverty-fine 1
   set dead-people 0
   set starting-wealth 50 ; 20
   set max-ticks-in-poverty 10 ; 5
@@ -323,6 +323,11 @@ to poor-die ;; turtle procedure
   ]
 end
 
+; Statistical procedure
+to-report count-below-poverty
+    report count turtles with [ticks-in-poverty > 0]
+end
+
 
 ; Copyright 1998 Uri Wilensky.
 ; See Info tab for full copyright and license.
@@ -573,7 +578,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -2674135 true "" "plot (count turtles with [ticks-in-poverty > 0])"
+"default" 1.0 0 -2674135 true "" "plot count-below-poverty"
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -986,6 +991,27 @@ NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="Experiment_charity" repetitions="5" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="5000"/>
+    <metric>count-below-poverty</metric>
+    <enumeratedValueSet variable="lower-tax">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent-best-land">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="charity" first="0" step="1" last="100"/>
+    <enumeratedValueSet variable="upper-tax">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="250"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
