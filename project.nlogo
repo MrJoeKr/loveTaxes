@@ -994,27 +994,23 @@ NetLogo 6.3.0
       <value value="250"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="Experiment_charity_0_to_8" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="Experiment_charity_0_to_8" repetitions="5" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
-    <metric>count turtles</metric>
+    <timeLimit steps="5000"/>
+    <metric>count-below-poverty</metric>
     <enumeratedValueSet variable="lower-tax">
-      <value value="6"/>
+      <value value="0"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="upper-tax">
-      <value value="6"/>
+      <value value="0"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="charity" first="0" step="0.1" last="8"/>
+    <enumeratedValueSet variable="num-people">
+      <value value="250"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="percent-best-land">
       <value value="16"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="charity">
-      <value value="2"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="stop-at-max-ticks">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="num-people">
-      <value value="250"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
