@@ -9,6 +9,7 @@ globals
   dead-people    ; number of agents who died
   starting-wealth ; starting wealth of turtles
   max-ticks-in-poverty ; how many turns in poverty before death
+  max-ticks-still-in-poverty ; how many ticks the agent is still in poverty
   dead-fine
   lower-class-harvest-amount
   upper-class-harvest-amount
@@ -28,7 +29,8 @@ turtles-own
   class            ; what social class is in, based on wealth
                    ; 0.5 - lower (0-25%)
                    ; 1 - high (75-100%)
-  ticks-in-poverty ; how many turns is turtle below eat-price
+  ticks-in-poverty ; how many ticks is turtle below eat-price
+  ticks-after-poverty  ; how many ticks is still considered poor after
 ]
 
 ;;;
@@ -51,6 +53,7 @@ to setup
   set dead-people 0
   set starting-wealth 50 ; 20
   set max-ticks-in-poverty 10 ; 5
+  set max-ticks-still-in-poverty 50
   set dead-fine 100
   ;; call other procedures to set up various parts of the world
   setup-patches
@@ -100,6 +103,7 @@ to set-initial-turtle-vars
   ;; set wealth deterministic
   set wealth starting-wealth
   set ticks-in-poverty 0
+  set ticks-after-poverty 0
 end
 
 ;; Set the class of the turtles -- if a turtle has less than a third
@@ -288,13 +292,19 @@ to move-eat-update  ;; turtle procedure
   ]
 
   ifelse (wealth < eat-price) [
-      ; set state-treasure (state-treasure - poverty-fine)
-      ; State pays for agents who are in debt
-      set ticks-in-poverty (ticks-in-poverty + 1)
+    ; set state-treasure (state-treasure - poverty-fine)
+    ; State pays for agents who are in debt
+    ; set ticks-in-poverty (ticks-in-poverty + 1)
+    set ticks-in-poverty 1
+    set ticks-after-poverty max-ticks-still-in-poverty
   ] [
-      set ticks-in-poverty 0
-      ; Eat only if the agent has enough money to afford it
-      ; set wealth (wealth - eat-price)
+    set ticks-after-poverty max list (ticks-after-poverty - 1) 0
+
+    if ticks-after-poverty = 0
+      [ set ticks-in-poverty 0 ]
+
+    ; Eat only if the agent has enough money to afford it
+    ; set wealth (wealth - eat-price)
   ]
 
   set wealth (wealth - eat-price)
