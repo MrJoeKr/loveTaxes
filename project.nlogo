@@ -12,8 +12,6 @@ globals
   dead-fine
   lower-class-harvest-amount
   upper-class-harvest-amount
-  ; For stopping if max ticks reached
-  max-ticks
 ]
 
 patches-own
@@ -54,7 +52,6 @@ to setup
   set starting-wealth 50 ; 20
   set max-ticks-in-poverty 10 ; 5
   set dead-fine 100
-  set max-ticks 10000
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
@@ -142,9 +139,6 @@ to go
   ;; grow grain every grain-growth-interval clock ticks
   if ticks mod grain-growth-interval = 0
     [ ask patches [ grow-grain ] ]
-
-  if ticks >= max-ticks
-    [ stop ]
 
   tick
 end
@@ -576,7 +570,7 @@ SWITCH
 308
 stop-at-max-ticks
 stop-at-max-ticks
-0
+1
 1
 -1000
 
