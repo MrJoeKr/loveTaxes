@@ -326,9 +326,12 @@ end
 
 ; Statistical procedure
 to-report count-below-poverty
-    report count turtles with [ticks-in-poverty > 0]
+  report count turtles with [ticks-in-poverty > 0]
 end
 
+to-report relative-state-treasure
+  report state-treasure / num-people
+end
 
 ; Copyright 1998 Uri Wilensky.
 ; See Info tab for full copyright and license.
@@ -493,7 +496,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -14439633 true "" "plot (state-treasure / num-people)"
+"default" 1.0 0 -14439633 true "" "plot relative-state-treasure"
 
 PLOT
 608
@@ -1006,6 +1009,23 @@ NetLogo 6.3.0
       <value value="0"/>
     </enumeratedValueSet>
     <steppedValueSet variable="charity" first="0" step="0.1" last="8"/>
+    <enumeratedValueSet variable="num-people">
+      <value value="250"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent-best-land">
+      <value value="16"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Experiment_taxes_charity_4" repetitions="5" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="5000"/>
+    <metric>relative-state-treasure</metric>
+    <steppedValueSet variable="lower-tax" first="0" step="1" last="100"/>
+    <steppedValueSet variable="upper-tax" first="0" step="1" last="100"/>
+    <enumeratedValueSet variable="charity">
+      <value value="4"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="250"/>
     </enumeratedValueSet>
