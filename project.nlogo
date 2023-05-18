@@ -361,10 +361,10 @@ ticks
 30.0
 
 BUTTON
-13
-350
-89
-383
+14
+360
+90
+393
 setup
 setup
 NIL
@@ -378,10 +378,10 @@ NIL
 1
 
 BUTTON
-100
-350
-170
-383
+101
+360
+171
+393
 go
 go
 T
@@ -562,17 +562,6 @@ false
 "" ""
 PENS
 "default" 1.0 0 -2674135 true "" "plot count-below-poverty"
-
-SWITCH
-8
-275
-181
-308
-stop-at-max-ticks
-stop-at-max-ticks
-1
-1
--1000
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -1000,6 +989,29 @@ NetLogo 6.3.0
     <steppedValueSet variable="charity" first="0" step="1" last="100"/>
     <enumeratedValueSet variable="upper-tax">
       <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="250"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Experiment_charity_0_to_8" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="lower-tax">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="upper-tax">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent-best-land">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="charity">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stop-at-max-ticks">
+      <value value="false"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="250"/>
