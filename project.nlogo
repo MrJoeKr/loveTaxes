@@ -10,6 +10,7 @@ globals
   starting-wealth ; starting wealth of turtles
   max-ticks-in-poverty ; how many turns in poverty before death
   max-ticks-still-in-poverty ; how many ticks the agent is still in poverty
+  min-relative-state-treasure ; if the rel. st. treasure becomes lower, the simulation is stopped
   dead-fine
   lower-class-harvest-amount
   upper-class-harvest-amount
@@ -49,6 +50,7 @@ to setup
   set upper-class-harvest-amount 30
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
+  set min-relative-state-treasure -3000
   set poverty-fine lower-class-harvest-amount ; was 1
   set dead-people 0
   set starting-wealth 50 ; 20
@@ -145,6 +147,9 @@ to go
     [ ask patches [ grow-grain ] ]
 
   pay-for-poor-people
+
+  if relative-state-treasure <= min-relative-state-treasure
+    [ stop ]
 
   tick
 end
@@ -545,7 +550,7 @@ lower-tax
 lower-tax
 0
 100
-6.0
+25.0
 1
 1
 %
