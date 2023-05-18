@@ -497,7 +497,7 @@ charity
 charity
 0
 100
-2.0
+4.0
 0.1
 1
 %
@@ -550,7 +550,7 @@ lower-tax
 lower-tax
 0
 100
-100.0
+6.0
 1
 1
 %
@@ -565,7 +565,7 @@ upper-tax
 upper-tax
 0
 100
-90.0
+6.0
 1
 1
 %
