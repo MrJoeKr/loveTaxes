@@ -514,24 +514,6 @@ PENS
 "up" 1.0 0 -13345367 true "" "plot avg-wealth 1"
 "both" 1.0 0 -16777216 true "" "plot avg-wealth 0"
 
-PLOT
-612
-27
-860
-219
-Died in total
-Time
-Total Dead
-0.0
-10.0
-0.0
-10.0
-true
-false
-"" ""
-PENS
-"default" 1.0 0 -5298144 true "" "plot dead-people"
-
 SLIDER
 6
 190
@@ -563,10 +545,10 @@ upper-tax
 HORIZONTAL
 
 PLOT
-777
-450
-1028
-646
+614
+27
+865
+223
 Below poverty
 NIL
 NIL
