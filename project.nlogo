@@ -497,7 +497,7 @@ charity
 charity
 0
 100
-4.0
+2.0
 0.1
 1
 %
@@ -550,7 +550,7 @@ lower-tax
 lower-tax
 0
 100
-25.0
+100.0
 1
 1
 %
@@ -565,7 +565,7 @@ upper-tax
 upper-tax
 0
 100
-6.0
+90.0
 1
 1
 %
@@ -1039,7 +1039,7 @@ NetLogo 6.3.0
       <value value="16"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="Experiment_taxes_charity_2" repetitions="5" runMetricsEveryStep="true">
+  <experiment name="experiment_taxes_charity_2" repetitions="5" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="5000"/>
@@ -1048,6 +1048,40 @@ NetLogo 6.3.0
     <steppedValueSet variable="upper-tax" first="0" step="5" last="100"/>
     <enumeratedValueSet variable="charity">
       <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="250"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent-best-land">
+      <value value="16"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment_taxes_charity_4" repetitions="5" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="5000"/>
+    <metric>relative-state-treasure</metric>
+    <steppedValueSet variable="lower-tax" first="0" step="5" last="100"/>
+    <steppedValueSet variable="upper-tax" first="0" step="5" last="100"/>
+    <enumeratedValueSet variable="charity">
+      <value value="4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="250"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent-best-land">
+      <value value="16"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment_taxes_charity_6" repetitions="5" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="5000"/>
+    <metric>relative-state-treasure</metric>
+    <steppedValueSet variable="lower-tax" first="0" step="5" last="100"/>
+    <steppedValueSet variable="upper-tax" first="0" step="5" last="100"/>
+    <enumeratedValueSet variable="charity">
+      <value value="6"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="250"/>
