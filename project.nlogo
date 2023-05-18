@@ -47,7 +47,7 @@ to setup
   set upper-class-harvest-amount 30
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
-  set poverty-fine 1
+  set poverty-fine lower-class-harvest-amount ; was 1
   set dead-people 0
   set starting-wealth 50 ; 20
   set max-ticks-in-poverty 10 ; 5
@@ -139,6 +139,8 @@ to go
   ;; grow grain every grain-growth-interval clock ticks
   if ticks mod grain-growth-interval = 0
     [ ask patches [ grow-grain ] ]
+
+  pay-for-poor-people
 
   tick
 end
@@ -285,9 +287,8 @@ to move-eat-update  ;; turtle procedure
     fd 1
   ]
 
-
   ifelse (wealth < eat-price) [
-      set state-treasure (state-treasure - poverty-fine)
+      ; set state-treasure (state-treasure - poverty-fine)
       ; State pays for agents who are in debt
       set ticks-in-poverty (ticks-in-poverty + 1)
   ] [
@@ -299,6 +300,12 @@ to move-eat-update  ;; turtle procedure
   set wealth (wealth - eat-price)
 
   be-kind
+end
+
+to pay-for-poor-people
+  let poor-people count-below-poverty
+  let poor-percent poor-people / num-people
+  set state-treasure state-treasure - poor-percent * poverty-fine * poor-people
 end
 
 ;; Plot according to class
@@ -330,7 +337,8 @@ to-report count-below-poverty
 end
 
 to-report relative-state-treasure
-  report state-treasure / num-people
+  ; Round on two decimal points
+  report precision (state-treasure / num-people) 2
 end
 
 ; Copyright 1998 Uri Wilensky.
@@ -474,7 +482,7 @@ charity
 charity
 0
 100
-2.0
+4.0
 0.1
 1
 %
@@ -527,7 +535,7 @@ lower-tax
 lower-tax
 0
 100
-100.0
+6.0
 1
 1
 %
@@ -542,7 +550,7 @@ upper-tax
 upper-tax
 0
 100
-100.0
+6.0
 1
 1
 %
