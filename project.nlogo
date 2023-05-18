@@ -424,10 +424,10 @@ percent-best-land
 HORIZONTAL
 
 PLOT
-3
+19
 454
-255
-634
+291
+664
 Class Plot
 Time
 Turtles
@@ -444,10 +444,10 @@ PENS
 "both" 1.0 0 -16777216 true "" "plot count turtles"
 
 PLOT
-526
-451
-759
-648
+338
+460
+578
+660
 Class Histogram
 Classes
 Turtles
@@ -495,10 +495,10 @@ PENS
 "default" 1.0 0 -14439633 true "" "plot (state-treasure / num-people)"
 
 PLOT
-270
-453
-506
-645
+608
+457
+867
+664
 Average Wealth
 Time
 Avg Wealth
