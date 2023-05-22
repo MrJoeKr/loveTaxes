@@ -7,8 +7,8 @@ globals
   poverty-fine                ; The amount state pays for poor agents each tick
   eat-price                   ; Price for eating each tick
   starting-wealth             ; Starting wealth of turtles
-  max-ticks-in-poverty        ; How many turns in poverty before death
-  max-ticks-still-in-poverty  ; How many ticks the agent is still in poverty
+  max-ticks-still-in-poverty  ; How many ticks the agent is still in poverty after recovering from it
+                              ; (to make the below poverty graph smoother)
   min-relative-state-treasure ; If the relative state treasure reaches this value, the simulation is stopped
                               ; If equal to zero, it is disabled
   lower-class-harvest-amount  ; The maximum amount the agent of lower class earn each tick
