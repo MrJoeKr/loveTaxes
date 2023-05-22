@@ -25,7 +25,6 @@ turtles-own
 [
   wealth               ; The amount of grain a turtle has
   life-expectancy      ; Maximum age that a turtle can reach
-  vision               ; How many patches ahead a turtle can see
   class                ; What social class is in, based on wealth:
                        ;   0.5 - lower
                        ;   1   - upper
@@ -149,42 +148,12 @@ to go
   tick
 end
 
-;; determine the direction which is most profitable for each turtle in
-;; the surrounding patches within the turtles' vision
-to turn-towards-grain  ;; turtle procedure
-  set heading 0
-  let best-direction 0
-  let best-amount grain-ahead
-  set heading 90
-  if (grain-ahead > best-amount)
-    [ set best-direction 90
-      set best-amount grain-ahead ]
-  set heading 180
-  if (grain-ahead > best-amount)
-    [ set best-direction 180
-      set best-amount grain-ahead ]
-  set heading 270
-  if (grain-ahead > best-amount)
-    [ set best-direction 270
-      set best-amount grain-ahead ]
-  set heading best-direction
-end
-
 ;; turtles move about at random.
 to turn-random  ;; turtle procedure
   ;; up down left right option
   let possible-directions [0 90 180 270]
   let random-direction item random length possible-directions possible-directions
   set heading random-direction
-end
-
-to-report grain-ahead  ;; turtle procedure
-  let total 0
-  let how-far 1
-  repeat vision
-    [ set total total + [grain-here] of patch-ahead how-far
-      set how-far how-far + 1 ]
-  report total
 end
 
 to grow-grain  ;; patch procedure
