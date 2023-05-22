@@ -151,23 +151,9 @@ to turn-random  ;; turtle procedure
 end
 
 to grow-grain  ;; patch procedure
-
-  ; If grain exceeds max, make it max value
-  set grain-here min (list grain-here max-grain-here)
-
-  ; Cannot be less than zero
-  set grain-here max (list grain-here 0)
-
   ; If a patch does not have it's maximum amount of grain, add
   ; num-grain-grown to its grain amount
-  if (grain-here <= max-grain-here)
-    [ set grain-here grain-here + num-grain-grown
-
-      ; If the new amount of grain on a patch is over its maximum
-      ; capacity, set it to its maximum
-      if (grain-here > max-grain-here)
-        [ set grain-here max-grain-here ]
-    ]
+  set grain-here min list (grain-here + num-grain-grown) max-grain-here
 
   recolor-patch
 end
