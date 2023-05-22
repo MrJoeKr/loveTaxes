@@ -50,7 +50,7 @@ to setup
   set upper-class-harvest-amount 30
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
-  set min-relative-state-treasure 0
+  set min-relative-state-treasure -3000
   set poverty-fine lower-class-harvest-amount ; was 1
   set dead-people 0
   set starting-wealth 50 ; 20
@@ -148,7 +148,7 @@ to go
 
   pay-for-poor-people
 
-  if min-relative-state-treasure != 0 and relative-state-treasure <= min-relative-state-treasure
+  if relative-state-treasure <= min-relative-state-treasure
     [ stop ]
 
   tick
@@ -497,7 +497,7 @@ charity
 charity
 0
 100
-100.0
+2.0
 0.1
 1
 %
@@ -550,7 +550,7 @@ lower-tax
 lower-tax
 0
 100
-0.0
+15.0
 1
 1
 %
@@ -565,7 +565,7 @@ upper-tax
 upper-tax
 0
 100
-0.0
+15.0
 1
 1
 %
@@ -1001,7 +1001,7 @@ NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="charity_experiment_0_to_100" repetitions="3" runMetricsEveryStep="true">
+  <experiment name="charity_experiment_0_to_100" repetitions="2" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="5000"/>
@@ -1010,7 +1010,7 @@ NetLogo 6.3.0
       <value value="0"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="percent-best-land">
-      <value value="25"/>
+      <value value="15"/>
     </enumeratedValueSet>
     <steppedValueSet variable="charity" first="0" step="1" last="100"/>
     <enumeratedValueSet variable="upper-tax">
@@ -1020,7 +1020,7 @@ NetLogo 6.3.0
       <value value="250"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="Experiment_charity_0_to_8" repetitions="5" runMetricsEveryStep="true">
+  <experiment name="experiment_charity_0_to_10" repetitions="2" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="5000"/>
@@ -1031,12 +1031,12 @@ NetLogo 6.3.0
     <enumeratedValueSet variable="upper-tax">
       <value value="0"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="charity" first="0" step="0.1" last="8"/>
+    <steppedValueSet variable="charity" first="0" step="0.1" last="10"/>
     <enumeratedValueSet variable="num-people">
       <value value="250"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="percent-best-land">
-      <value value="16"/>
+      <value value="15"/>
     </enumeratedValueSet>
   </experiment>
   <experiment name="experiment_taxes_charity_2" repetitions="5" runMetricsEveryStep="true">
@@ -1095,8 +1095,8 @@ NetLogo 6.3.0
     <go>go</go>
     <timeLimit steps="10000"/>
     <metric>relative-state-treasure</metric>
-    <steppedValueSet variable="lower-tax" first="0" step="5" last="15"/>
-    <steppedValueSet variable="upper-tax" first="0" step="5" last="35"/>
+    <steppedValueSet variable="lower-tax" first="0" step="3" last="15"/>
+    <steppedValueSet variable="upper-tax" first="0" step="3" last="35"/>
     <enumeratedValueSet variable="charity">
       <value value="0"/>
     </enumeratedValueSet>
@@ -1139,6 +1139,40 @@ NetLogo 6.3.0
     </enumeratedValueSet>
     <enumeratedValueSet variable="percent-best-land">
       <value value="15"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment_rich_country_taxes_charity_2" repetitions="5" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="10000"/>
+    <metric>relative-state-treasure</metric>
+    <steppedValueSet variable="lower-tax" first="0" step="3" last="15"/>
+    <steppedValueSet variable="upper-tax" first="0" step="3" last="35"/>
+    <enumeratedValueSet variable="charity">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="250"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent-best-land">
+      <value value="25"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment_rich_country_taxes_charity_4" repetitions="5" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="10000"/>
+    <metric>relative-state-treasure</metric>
+    <steppedValueSet variable="lower-tax" first="0" step="3" last="15"/>
+    <steppedValueSet variable="upper-tax" first="0" step="3" last="35"/>
+    <enumeratedValueSet variable="charity">
+      <value value="4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="250"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent-best-land">
+      <value value="25"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
