@@ -124,26 +124,19 @@ to go
     turn-random
   ]
 
-  ;ask turtles
-  ;[
-    ;turn-towards-grain
-    ;turn-random
-  ;]
-
   ask turtles
   [ move-eat-update ]
 
-  ; poor-die
-
   recolor-turtles
 
-  ;; grow grain every grain-growth-interval clock ticks
+  ; Grow grain every grain-growth-interval clock ticks
   if ticks mod grain-growth-interval = 0
     [ ask patches [ grow-grain ] ]
 
   pay-for-poor-people
 
-  if relative-state-treasure <= min-relative-state-treasure
+  if min-relative-state-treasure != 0 and
+      relative-state-treasure <= min-relative-state-treasure
     [ stop ]
 
   tick
@@ -159,18 +152,19 @@ end
 
 to grow-grain  ;; patch procedure
 
-  ;; if grain exceeds max, make it max value
+  ; If grain exceeds max, make it max value
   set grain-here min (list grain-here max-grain-here)
-  ;; cannot be less than zero
+
+  ; Cannot be less than zero
   set grain-here max (list grain-here 0)
 
-  ;; if a patch does not have it's maximum amount of grain, add
-  ;; num-grain-grown to its grain amount
+  ; If a patch does not have it's maximum amount of grain, add
+  ; num-grain-grown to its grain amount
   if (grain-here <= max-grain-here)
     [ set grain-here grain-here + num-grain-grown
 
-      ;; if the new amount of grain on a patch is over its maximum
-      ;; capacity, set it to its maximum
+      ; If the new amount of grain on a patch is over its maximum
+      ; capacity, set it to its maximum
       if (grain-here > max-grain-here)
         [ set grain-here max-grain-here ]
     ]
@@ -178,9 +172,8 @@ to grow-grain  ;; patch procedure
   recolor-patch
 end
 
-;; each turtle harvests the grain on its patch
-;; right now, agent takes as much grain as they can
-;; according to the class
+; Each turtle harvests the grain on its patch
+; Agent takes as much grain as they can according to the class
 to harvest
   harvest-wealth
   recolor-patch
@@ -192,7 +185,7 @@ to-report harvested-amount-calc
 end
 
 ; Turtle procedure
-;; Choose by class from lower up to upper
+; Choose by class from lower up to upper
 to-report choose-by-class [a b]
   ifelse class = 0.5
   [ report a ]
@@ -216,7 +209,9 @@ to harvest-wealth
   set wealth (wealth + income)
 end
 
-; compute class for the turtle
+; Compute class for the turtle
+; Class is decided by the agent who has the biggest wealth
+; All the people below the 50% of the richest agent's wealth are considered lower class
 to compute-class
   if (count turtles = 0) [ stop ]
 
@@ -285,7 +280,7 @@ to pay-for-poor-people
 end
 
 ;; Plot according to class
-;; if cl = 0 plot all classes
+;; if cl = 0 plot average wealth of all classes
 to-report avg-wealth [cl]
   if cl = 0 [ report mean [wealth] of turtles ]
 
