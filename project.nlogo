@@ -1,18 +1,18 @@
 globals
 [
-  max-grain    ; maximum amount any patch can hold
-  num-grain-grown
-  grain-growth-interval
-  state-treasure ; total amount of state money
-  poverty-fine   ; The amount state pays for poor agents each tick
-  eat-price    ; price for eating is slider (constant)
-  starting-wealth ; starting wealth of turtles
-  max-ticks-in-poverty ; how many turns in poverty before death
-  max-ticks-still-in-poverty ; how many ticks the agent is still in poverty
-  min-relative-state-treasure ; if the relative state treasure reaches this value, the simulation is stopped
-                              ; if equal to zero, it is disabled
-  lower-class-harvest-amount  ; the maximum amount the agent of lower class earn each tick
-  upper-class-harvest-amount  ; same as the above for upper class
+  max-grain                   ; Maximum amount any patch can hold
+  num-grain-grown             ; How much does the grain grow when it is time for it to grow
+  grain-growth-interval       ; In which intervals the grain grows (e.g. if equal to one, it grows each tick)
+  state-treasure              ; Total amount of state money
+  poverty-fine                ; The amount state pays for poor agents each tick
+  eat-price                   ; Price for eating each tick
+  starting-wealth             ; Starting wealth of turtles
+  max-ticks-in-poverty        ; How many turns in poverty before death
+  max-ticks-still-in-poverty  ; How many ticks the agent is still in poverty
+  min-relative-state-treasure ; If the relative state treasure reaches this value, the simulation is stopped
+                              ; If equal to zero, it is disabled
+  lower-class-harvest-amount  ; The maximum amount the agent of lower class earn each tick
+  upper-class-harvest-amount  ; Same as the above for upper class
 ]
 
 patches-own
@@ -42,8 +42,8 @@ to setup
   ;; set global variables to appropriate values
   set max-grain 100
   set grain-growth-interval 1
-  set eat-price 0.9 ; 0.9 seems the best value
-  set num-grain-grown 0.1 ; 0.1
+  set eat-price 0.9
+  set num-grain-grown 0.1 ; growing at a slow rate
   set lower-class-harvest-amount 15
   set upper-class-harvest-amount 30
   set state-treasure 0
