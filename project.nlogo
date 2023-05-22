@@ -277,9 +277,11 @@ to move-eat-update  ;; turtle procedure
 end
 
 to pay-for-poor-people
-  let poor-people count-below-poverty
-  let poor-percent poor-people / num-people
-  set state-treasure state-treasure - poor-percent * poverty-fine * poor-people
+  let poor-people-count count-below-poverty
+  let poor-percent poor-people-count / num-people
+
+  let fine poor-percent * poverty-fine * poor-people-count
+  set state-treasure state-treasure - fine
 end
 
 ;; Plot according to class
