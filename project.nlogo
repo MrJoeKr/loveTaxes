@@ -46,9 +46,9 @@ to setup
   set upper-class-harvest-amount 30
   set state-treasure 0
   set min-relative-state-treasure -3000
-  set poverty-fine lower-class-harvest-amount ; was 1
-  set starting-wealth 50 ; 20
-  set max-ticks-in-poverty 10 ; 5
+  set poverty-fine lower-class-harvest-amount
+  set starting-wealth 50
+  set max-ticks-in-poverty 10
   set max-ticks-still-in-poverty 50
   ;; call other procedures to set up various parts of the world
   setup-patches
