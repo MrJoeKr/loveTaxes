@@ -29,7 +29,7 @@ turtles-own
   class                ; What social class is in, based on wealth:
                        ;   0.5 - lower
                        ;   1   - upper
-  is_poor              ; Agent is considered poor if they have less money than eat-price
+  is-poor              ; Agent is considered poor if they have less money than eat-price
   ticks-after-poverty  ; How many ticks is still considered poor after
 ]
 
@@ -99,7 +99,7 @@ to set-initial-turtle-vars
   face one-of neighbors4
   set wealth starting-wealth
   ; starting-wealth is above the eat-price
-  set is_poor false
+  set is-poor false
   set ticks-after-poverty 0
 end
 
@@ -238,18 +238,22 @@ to be-kind
 end
 
 to move-eat-update  ;; turtle procedure
+  ; Decide randomly whether to go forward or not
   if (random-float 1 < 0.5) [
     fd 1
   ]
 
   ifelse (wealth < eat-price) [
-    set is_poor true
+    set is-poor true
     set ticks-after-poverty max-ticks-still-in-poverty
   ] [
-    set ticks-after-poverty max list (ticks-after-poverty - 1) 0
+    set ticks-after-poverty ticks-after-poverty - 1
 
-    if ticks-after-poverty = 0
-      [ set is_poor false ]
+    if ticks-after-poverty <= 0
+    [
+      set ticks-after-poverty 0
+      set is-poor false
+    ]
   ]
 
   set wealth (wealth - eat-price)
@@ -279,7 +283,7 @@ end
 
 ; Statistical procedure
 to-report count-below-poverty
-  report count turtles with [is_poor]
+  report count turtles with [is-poor]
 end
 
 to-report relative-state-treasure
