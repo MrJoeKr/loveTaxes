@@ -6,14 +6,13 @@ globals
   state-treasure ; total amount of state money
   poverty-fine   ; The amount state pays for poor agents each tick
   eat-price    ; price for eating is slider (constant)
-  dead-people    ; number of agents who died
   starting-wealth ; starting wealth of turtles
   max-ticks-in-poverty ; how many turns in poverty before death
   max-ticks-still-in-poverty ; how many ticks the agent is still in poverty
-  min-relative-state-treasure ; if the rel. st. treasure becomes lower, the simulation is stopped
-  dead-fine
-  lower-class-harvest-amount
-  upper-class-harvest-amount
+  min-relative-state-treasure ; if the relative state treasure reaches this value, the simulation is stopped
+                              ; if equal to zero, it is disabled
+  lower-class-harvest-amount  ; the maximum amount the agent of lower class earn each tick
+  upper-class-harvest-amount  ; same as the above for upper class
 ]
 
 patches-own
@@ -43,20 +42,16 @@ to setup
   ;; set global variables to appropriate values
   set max-grain 100
   set grain-growth-interval 1
-  ;; TO BE BALANCED
   set eat-price 0.9 ; 0.9 seems the best value
   set num-grain-grown 0.1 ; 0.1
   set lower-class-harvest-amount 15
   set upper-class-harvest-amount 30
-  ;;;;;;;;;;;;;;;;;;;;;;;;;
   set state-treasure 0
   set min-relative-state-treasure -3000
   set poverty-fine lower-class-harvest-amount ; was 1
-  set dead-people 0
   set starting-wealth 50 ; 20
   set max-ticks-in-poverty 10 ; 5
   set max-ticks-still-in-poverty 50
-  set dead-fine 100
   ;; call other procedures to set up various parts of the world
   setup-patches
   setup-turtles
@@ -332,18 +327,6 @@ to-report avg-wealth [cl]
 
   ifelse empty? cl-turtles [ report 0 ]
   [ report mean cl-turtles ]
-end
-
-to poor-die ;; turtle procedure
-  ask turtles [
-    if (ticks-in-poverty = max-ticks-in-poverty) [
-      set dead-people (dead-people + 1)
-      set state-treasure (state-treasure - dead-fine)
-    ]
-  ]
-  ask turtles with [ticks-in-poverty = max-ticks-in-poverty] [
-    die
-  ]
 end
 
 ; Statistical procedure
