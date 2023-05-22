@@ -7,6 +7,8 @@ globals
   poverty-fine                ; The amount state pays for poor agents each tick
   eat-price                   ; Price for eating each tick
   starting-wealth             ; Starting wealth of turtles
+  ticks-to-save-money         ; If charity parameter is non-zero, the agent saves money for food times these ticks
+                              ; from their charity budget
   max-ticks-still-in-poverty  ; How many ticks the agent is still in poverty after recovering from it
                               ; (to make the below poverty graph smoother)
   min-relative-state-treasure ; If the relative state treasure reaches this value, the simulation is stopped
@@ -48,7 +50,7 @@ to setup
   set min-relative-state-treasure -3000
   set poverty-fine lower-class-harvest-amount
   set starting-wealth 50
-  set max-ticks-in-poverty 10
+  set ticks-to-save-money 10
   set max-ticks-still-in-poverty 50
   ;; call other procedures to set up various parts of the world
   setup-patches
@@ -229,7 +231,7 @@ end
 ; Put grain according to the charity parameter
 to be-kind
   ; The amount that agent can give, excluding expenses for food
-  let food-expenses eat-price * max-ticks-in-poverty
+  let food-expenses eat-price * ticks-to-save-money
   let amount-can-give wealth - food-expenses
 
   if amount-can-give <= 0 [ stop ]
