@@ -1110,6 +1110,23 @@ NetLogo 6.3.0
       <value value="25"/>
     </enumeratedValueSet>
   </experiment>
+  <experiment name="experiment_taxes_charity_2_rich" repetitions="2" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="5000"/>
+    <metric>relative-state-treasure</metric>
+    <steppedValueSet variable="lower-tax" first="0" step="5" last="100"/>
+    <steppedValueSet variable="upper-tax" first="0" step="5" last="100"/>
+    <enumeratedValueSet variable="charity">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="250"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent-best-land">
+      <value value="25"/>
+    </enumeratedValueSet>
+  </experiment>
 </experiments>
 @#$#@#$#@
 @#$#@#$#@
