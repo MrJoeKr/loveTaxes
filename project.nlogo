@@ -47,7 +47,7 @@ to setup
   set lower-class-harvest-amount 15
   set upper-class-harvest-amount 30
   set state-treasure 0
-  set min-relative-state-treasure 0
+  set min-relative-state-treasure -5000
   set poverty-fine lower-class-harvest-amount
   set starting-wealth 50
   set ticks-to-save-money 10
@@ -379,7 +379,7 @@ percent-best-land
 percent-best-land
 5
 25
-25.0
+15.0
 1
 1
 %
@@ -500,7 +500,7 @@ upper-tax
 upper-tax
 0
 100
-15.0
+35.0
 1
 1
 %
@@ -1059,13 +1059,13 @@ NetLogo 6.3.0
       <value value="15"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="experiment_poor_country_taxes_charity_2" repetitions="5" runMetricsEveryStep="true">
+  <experiment name="experiment_poor_country_taxes_charity_2" repetitions="2" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="10000"/>
     <metric>relative-state-treasure</metric>
-    <steppedValueSet variable="lower-tax" first="0" step="3" last="15"/>
-    <steppedValueSet variable="upper-tax" first="0" step="3" last="35"/>
+    <steppedValueSet variable="lower-tax" first="0" step="1" last="15"/>
+    <steppedValueSet variable="upper-tax" first="0" step="1" last="35"/>
     <enumeratedValueSet variable="charity">
       <value value="2"/>
     </enumeratedValueSet>
@@ -1076,13 +1076,13 @@ NetLogo 6.3.0
       <value value="15"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="experiment_rich_country_taxes_charity_2" repetitions="5" runMetricsEveryStep="true">
+  <experiment name="experiment_rich_country_taxes_charity_2" repetitions="2" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="10000"/>
     <metric>relative-state-treasure</metric>
-    <steppedValueSet variable="lower-tax" first="0" step="3" last="15"/>
-    <steppedValueSet variable="upper-tax" first="0" step="3" last="35"/>
+    <steppedValueSet variable="lower-tax" first="0" step="1" last="15"/>
+    <steppedValueSet variable="upper-tax" first="0" step="1" last="35"/>
     <enumeratedValueSet variable="charity">
       <value value="2"/>
     </enumeratedValueSet>
