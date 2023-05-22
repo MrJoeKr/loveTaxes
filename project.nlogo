@@ -47,7 +47,7 @@ to setup
   set lower-class-harvest-amount 15
   set upper-class-harvest-amount 30
   set state-treasure 0
-  set min-relative-state-treasure -3000
+  set min-relative-state-treasure 0
   set poverty-fine lower-class-harvest-amount
   set starting-wealth 50
   set ticks-to-save-money 10
@@ -185,7 +185,7 @@ to-report harvested-amount-calc
 end
 
 ; Turtle procedure
-; Choose by class from lower up to upper
+; Choose parameter a or b by class of the agent
 to-report choose-by-class [a b]
   ifelse class = 0.5
   [ report a ]
