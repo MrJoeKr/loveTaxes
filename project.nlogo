@@ -262,9 +262,6 @@ to move-eat-update  ;; turtle procedure
   ]
 
   ifelse (wealth < eat-price) [
-    ; set state-treasure (state-treasure - poverty-fine)
-    ; State pays for agents who are in debt
-    ; set ticks-in-poverty (ticks-in-poverty + 1)
     set ticks-in-poverty 1
     set ticks-after-poverty max-ticks-still-in-poverty
   ] [
@@ -295,17 +292,18 @@ to-report avg-wealth [cl]
 
   let cl-turtles [wealth] of turtles with [class = cl]
 
-  ifelse empty? cl-turtles [ report 0 ]
+  ifelse empty? cl-turtles
+  [ report 0 ]
   [ report mean cl-turtles ]
 end
 
 ; Statistical procedure
 to-report count-below-poverty
-  report count turtles with [ticks-in-poverty > 0]
+  report count turtles with [ticks-in-poverty]
 end
 
 to-report relative-state-treasure
-  ; Round on two decimal points
+  ; Take only two decimal points
   report precision (state-treasure / num-people) 2
 end
 
