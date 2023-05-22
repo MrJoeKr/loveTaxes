@@ -239,11 +239,11 @@ end
 
 to move-eat-update  ;; turtle procedure
   ; Decide randomly whether to go forward or not
-  if (random-float 1 < 0.5) [
+  if random-float 1 < 0.5 [
     fd 1
   ]
 
-  ifelse (wealth < eat-price) [
+  ifelse wealth < eat-price [
     set is-poor true
     set ticks-after-poverty max-ticks-still-in-poverty
   ] [
@@ -256,7 +256,7 @@ to move-eat-update  ;; turtle procedure
     ]
   ]
 
-  set wealth (wealth - eat-price)
+  set wealth wealth - eat-price
 
   be-kind
 end
