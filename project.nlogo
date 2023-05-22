@@ -24,7 +24,6 @@ patches-own
 turtles-own
 [
   wealth               ; The amount of grain a turtle has
-  life-expectancy      ; Maximum age that a turtle can reach
   class                ; What social class is in, based on wealth:
                        ;   0.5 - lower
                        ;   1   - upper
