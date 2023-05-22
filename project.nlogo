@@ -23,13 +23,13 @@ patches-own
 
 turtles-own
 [
-  wealth           ; the amount of grain a turtle has
-  life-expectancy  ; maximum age that a turtle can reach
-  vision           ; how many patches ahead a turtle can see
-  class            ; what social class is in, based on wealth
-                   ; 0.5 - lower (0-25%)
-                   ; 1 - high (75-100%)
-  ticks-in-poverty ; how many ticks is turtle below eat-price
+  wealth               ; The amount of grain a turtle has
+  life-expectancy      ; Maximum age that a turtle can reach
+  vision               ; How many patches ahead a turtle can see
+  class                ; What social class is in, based on wealth:
+                       ;   0.5 - lower
+                       ;   1   - upper
+  ticks-in-poverty     ; how many ticks is turtle below eat-price
   ticks-after-poverty  ; how many ticks is still considered poor after
 ]
 
