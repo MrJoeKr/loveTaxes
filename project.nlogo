@@ -1001,7 +1001,7 @@ NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="Experiment_charity" repetitions="5" runMetricsEveryStep="true">
+  <experiment name="charity_experiment_0_to_100" repetitions="3" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="5000"/>
@@ -1010,7 +1010,7 @@ NetLogo 6.3.0
       <value value="0"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="percent-best-land">
-      <value value="16"/>
+      <value value="25"/>
     </enumeratedValueSet>
     <steppedValueSet variable="charity" first="0" step="1" last="100"/>
     <enumeratedValueSet variable="upper-tax">
